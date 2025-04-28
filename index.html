@@ -471,15 +471,42 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
         <p>📞+8801744525287</p>
         <p>📞+8801766417142</p>
       </div>
-      <form class="contact-form animate">
-        <div class="form-group"><input type="text" placeholder="Full Name" required></div>
-        <div class="form-group"><input type="email" placeholder="Email" required></div>
-        <div class="form-group"><textarea placeholder="Message" rows="5" required></textarea></div>
-        <section id="contact" class="contact-section">
-
-    <div class="contact-form">
-      <a href="mailto:advanceitds@gmail.com?subject=Interested in Your Courses&body=Hello Advance IT, I am interested in your courses." class="btn">Send Email</a>
+<section class="contact-section" id="contact">
+  <div class="contact-container">
+    <div class="contact-info">
+      <h2>Get in Touch</h2>
+      <p>Have questions? Feel free to reach out!</p>
     </div>
+    
+    <form class="contact-form" onsubmit="openEmailApp(event)">
+      <div class="form-group">
+        <input type="text" id="name" placeholder="Your Name" required />
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" placeholder="Your Email" required />
+      </div>
+      <div class="form-group">
+        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit" class="btn">Send Email</button>
+    </form>
+  </div>
+  <script>
+  function openEmailApp(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const userEmail = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    
+    const subject = encodeURIComponent('New message from ' + name);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${userEmail}\n\nMessage:\n${message}`);
+    
+    window.location.href = `mailto:advanceitds@gmail.com?subject=${subject}&body=${body}`;
+  }
+</script>
+</section>
+
   </div>
 </section>
         
