@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -30,6 +31,217 @@
       --light: #222;
       --dark: #ffffff;
     }
+      .ai-search-trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(var(--secondary), 0.1);
+    color: var(--secondary);
+    font-size: 1.8rem;
+    cursor: pointer;
+    margin-left: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .ai-search-trigger:hover {
+    background: rgba(var(--secondary), 0.2);
+    transform: scale(1.1);
+  }
+
+  .ai-search-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(var(--dark), 0.95);
+    z-index: 9999;
+    display: none;
+    backdrop-filter: blur(15px);
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10vh;
+  }
+
+  .ai-search-container.active {
+    display: flex;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .ai-search-box {
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+  }
+
+  .ai-search-input {
+    width: 100%;
+    padding: 2rem 3rem;
+    font-size: 2rem;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(var(--secondary), 0.3);
+    border-radius: 50px;
+    color: var(--light);
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  .ai-search-input:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 15px 40px rgba(var(--secondary), 0.2);
+  }
+
+  .ai-search-icon {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 2.5rem;
+  }
+
+  .ai-suggestions {
+    width: 80%;
+    max-width: 800px;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .ai-suggestion-chip {
+    background: rgba(var(--secondary), 0.1);
+    color: var(--secondary);
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: 1px solid rgba(var(--secondary), 0.3);
+  }
+
+  .ai-suggestion-chip:hover {
+    background: rgba(var(--secondary), 0.3);
+    transform: translateY(-3px);
+  }
+
+  .ai-results-container {
+    width: 80%;
+    max-width: 1000px;
+    margin-top: 3rem;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+  }
+
+  .ai-result-card {
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--secondary);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .ai-result-card:hover {
+    transform: translateX(10px);
+    background: rgba(var(--secondary), 0.05);
+  }
+
+  .ai-result-title {
+    font-size: 1.8rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .ai-result-content {
+    font-size: 1.4rem;
+    color: var(--accent);
+    line-height: 1.6;
+  }
+
+  .ai-result-type {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    background: rgba(var(--secondary), 0.1);
+    color: var(--secondary);
+    border-radius: 4px;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+  }
+
+  .ai-search-close {
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    font-size: 2.5rem;
+    color: var(--accent);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .ai-search-close:hover {
+    color: var(--secondary);
+    transform: rotate(90deg);
+  }
+
+  .ai-no-results {
+    text-align: center;
+    font-size: 1.6rem;
+    color: var(--accent);
+    padding: 3rem;
+  }
+
+  .ai-pulse {
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+
+  /* Typing indicator */
+  .ai-typing {
+    display: flex;
+    align-items: center;
+    color: var(--accent);
+    font-size: 1.4rem;
+    margin-top: 1rem;
+  }
+
+  .ai-typing-dots {
+    display: flex;
+    margin-left: 0.8rem;
+  }
+
+  .ai-typing-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--secondary);
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: bounce 1.4s infinite ease-in-out;
+  }
+
+  .ai-typing-dot:nth-child(1) { animation-delay: 0s; }
+  .ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+  }
     footer a { 
       
 background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
@@ -356,6 +568,9 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
     <button class="theme-toggle" id="themeToggle">Light Theme</button>
     <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     <div class="nav-menu" id="navMenu">
+      <div class="ai-search-trigger" id="aiSearchTrigger">
+  <i class='bx bx-search-alt'></i>
+</div>
       <div class="nav-item"><a href="#home">Home</a></div>
       <div class="nav-item"><a href="#teachers">Teachers</a></div>
       <div class="nav-item"><a href="#about">About</a></div>
@@ -363,7 +578,38 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
       <div class="nav-item"><a href="#contact">Contact</a></div>
     </div>
   </nav>
+<div class="ai-search-container" id="aiSearchContainer">
+  <div class="ai-search-close" id="aiSearchClose">
+    <i class='bx bx-x'></i>
+  </div>
+  
+  <div class="ai-search-box">
+    <input type="text" 
+           class="ai-search-input" 
+           id="aiSearchInput" 
+           placeholder="Ask me anything about our courses, teachers, or services..."
+           autocomplete="off">
+    <div class="ai-search-icon">
+      <i class='bx bx-search-alt'></i>
+    </div>
+  </div>
 
+  <div class="ai-suggestions" id="aiSuggestions">
+    <div class="ai-suggestion-chip">Web Development Course</div>
+    <div class="ai-suggestion-chip">CPA Marketing</div>
+    <div class="ai-suggestion-chip">Teacher Qualifications</div>
+    <div class="ai-suggestion-chip">Course Fees</div>
+    <div class="ai-suggestion-chip">Contact Information</div>
+    <div class="ai-suggestion-chip">About Academy</div>
+  </div>
+
+  <div class="ai-results-container" id="aiResultsContainer">
+    <div class="ai-no-results">
+      <p>Type your question or search term above</p>
+      <p>Try: "What's included in the Web Development course?"</p>
+    </div>
+  </div>
+</div>
   <!-- Hero Section -->
   <section class="hero-section" id="home">
     <div class="hero-content">
@@ -661,4 +907,200 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
     }, { threshold: 0.1 });
     document.querySelectorAll('.animate').forEach(el => observer.observe(el));
   </script>
+  <script>
+  // AI Search System
+  const aiSearchTrigger = document.getElementById('aiSearchTrigger');
+  const aiSearchContainer = document.getElementById('aiSearchContainer');
+  const aiSearchClose = document.getElementById('aiSearchClose');
+  const aiSearchInput = document.getElementById('aiSearchInput');
+  const aiSuggestions = document.getElementById('aiSuggestions');
+  const aiResultsContainer = document.getElementById('aiResultsContainer');
+  
+  // Content Index
+  const contentIndex = [
+    {
+      id: 'web-dev',
+      type: 'Course',
+      title: 'Web Development Course',
+      content: 'Our comprehensive web development course covers JavaScript, React JS, Node JS, Express JS, MongoDB, Vercel Hosting, and Firebase. Duration: 6 months. Original price: ৳10,500, Discount price: ৳8,500.',
+      keywords: ['web', 'development', 'javascript', 'react', 'node', 'mongodb', 'hosting'],
+      link: '#courses'
+    },
+    {
+      id: 'cpa-marketing',
+      type: 'Course',
+      title: 'CPA Marketing',
+      content: 'Learn affiliate marketing strategies with our CPA Marketing course. 100% income guarantee. Duration: 2 months. Original price: ৳7,500, Discount price: ৳5,500.',
+      keywords: ['cpa', 'marketing', 'affiliate', 'income'],
+      link: '#courses'
+    },
+    {
+      id: 'teachers',
+      type: 'Teachers',
+      title: 'Our Expert Instructors',
+      content: 'Meet our qualified teachers: MD. Samsuzzman Rubel (Computer Engineer), Al Aminur Rashid (ICT Master Trainer), MD. Razibul Hasan (English Literature), MD. Afjal Husain (Graphic Designer).',
+      keywords: ['teacher', 'instructor', 'expert', 'qualified'],
+      link: '#teachers'
+    },
+    {
+      id: 'contact',
+      type: 'Contact',
+      title: 'Contact Information',
+      content: 'Email: advanceitds@gmail.com, Phone: +8801744525287 or +8801766417142. Get in touch for course inquiries or support.',
+      keywords: ['contact', 'email', 'phone', 'support'],
+      link: '#contact'
+    },
+    {
+      id: 'about',
+      type: 'About',
+      title: 'About Advance IT',
+      content: 'We provide industry-leading technical education with practical learning approaches. Features include expert-led instruction, project-based learning, career support, and flexible scheduling.',
+      keywords: ['about', 'academy', 'education', 'learning'],
+      link: '#about'
+    }
+  ];
+
+  // Initialize search
+  aiSearchTrigger.addEventListener('click', () => {
+    aiSearchContainer.classList.add('active');
+    aiSearchInput.focus();
+  });
+
+  aiSearchClose.addEventListener('click', () => {
+    aiSearchContainer.classList.remove('active');
+    aiSearchInput.value = '';
+    showDefaultResults();
+  });
+
+  // Suggestion chips
+  aiSuggestions.querySelectorAll('.ai-suggestion-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      aiSearchInput.value = chip.textContent;
+      performAISearch(aiSearchInput.value);
+    });
+  });
+
+  // Search with debounce
+  let searchDebounce;
+  aiSearchInput.addEventListener('input', (e) => {
+    clearTimeout(searchDebounce);
+    
+    if (e.target.value.trim() === '') {
+      showDefaultResults();
+      return;
+    }
+    
+    // Show typing indicator
+    aiResultsContainer.innerHTML = `
+      <div class="ai-tying">
+        <div class="ai-typing">Searching</div>
+        <div class="ai-typing-dots">
+          <div class="ai-typing-dot"></div>
+          <div class="ai-typing-dot"></div>
+          <div class="ai-typing-dot"></div>
+        </div>
+      </div>
+    `;
+    
+    searchDebounce = setTimeout(() => {
+      performAISearch(e.target.value);
+    }, 500);
+  });
+
+  // Perform search
+  function performAISearch(query) {
+    const searchTerm = query.toLowerCase().trim();
+    
+    if (searchTerm === '') {
+      showDefaultResults();
+      return;
+    }
+    
+    // Simple AI matching - in a real app you'd use more advanced NLP
+    const results = contentIndex.filter(item => {
+      const inTitle = item.title.toLowerCase().includes(searchTerm);
+      const inContent = item.content.toLowerCase().includes(searchTerm);
+      const inKeywords = item.keywords.some(keyword => 
+        keyword.toLowerCase().includes(searchTerm)
+      );
+      
+      return inTitle || inContent || inKeywords;
+    });
+    
+    displayResults(results, searchTerm);
+  }
+
+  // Display results
+  function displayResults(results, searchTerm) {
+    if (results.length === 0) {
+      aiResultsContainer.innerHTML = `
+        <div class="ai-no-results">
+          <p>No results found for "${searchTerm}"</p>
+          <p>Try different keywords or ask a question</p>
+        </div>
+      `;
+      return;
+    }
+    
+    aiResultsContainer.innerHTML = '';
+    
+    results.forEach(result => {
+      const resultCard = document.createElement('div');
+      resultCard.className = 'ai-result-card';
+      
+      // Highlight matching text
+      const highlightedTitle = highlightMatches(result.title, searchTerm);
+      const highlightedContent = highlightMatches(
+        result.content.substring(0, 200) + (result.content.length > 200 ? '...' : ''), 
+        searchTerm
+      );
+      
+      resultCard.innerHTML = `
+        <div class="ai-result-title">
+          ${highlightedTitle}
+          <span class="ai-result-type">${result.type}</span>
+        </div>
+        <div class="ai-result-content">${highlightedContent}</div>
+      `;
+      
+      resultCard.addEventListener('click', () => {
+        window.location.href = result.link;
+        aiSearchContainer.classList.remove('active');
+      });
+      
+      aiResultsContainer.appendChild(resultCard);
+    });
+  }
+
+  // Highlight matching text
+  function highlightMatches(text, term) {
+    if (!term) return text;
+    
+    const regex = new RegExp(`(${term})`, 'gi');
+    return text.replace(regex, '<span class="highlight">$1</span>');
+  }
+
+  // Show default state
+  function showDefaultResults() {
+    aiResultsContainer.innerHTML = `
+      <div class="ai-no-results">
+        <p>Type your question or search term above</p>
+        <p>Try: "What's included in the Web Development course?"</p>
+      </div>
+    `;
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'k') {
+      e.preventDefault();
+      aiSearchContainer.classList.add('active');
+      aiSearchInput.focus();
+    }
+    
+    if (e.key === 'Escape') {
+      aiSearchContainer.classList.remove('active');
+    }
+  });
+</script>
 </body>
