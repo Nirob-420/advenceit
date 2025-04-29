@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
   <title>Advance IT, Sylhet</title>
+  <!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 
@@ -282,7 +287,52 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
       .course-grid { grid-template-columns:1fr; gap:3rem; margin:3rem auto; }
       .course-media { height:200px; }
       .price-discount { font-size:2rem; }
-    }
+  .teachers-section {
+    padding: 10rem 5%;
+    background: linear-gradient(to top, var(--dark) 20%, var(--primary) 100%);
+  }
+  
+  .teachers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 4rem;
+    max-width: 1400px;
+    margin: 4rem auto 0;
+  }
+  
+  .teacher-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(var(--secondary), 0.15);
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .teacher-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .teacher-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    border: 3px solid var(--secondary);
+    object-fit: cover;
+  }
+  
+  .teacher-name {
+    font-size: 2rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+  }
+  
+  .teacher-qualifications {
+    font-size: 1.4rem;
+    color: var(--accent);
+    line-height: 1.6;
+  }
     h1{
       background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
 -webkit-background-clip: text;
@@ -307,6 +357,7 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
     <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     <div class="nav-menu" id="navMenu">
       <div class="nav-item"><a href="#home">Home</a></div>
+      <div class="nav-item"><a href="#teachers">Teachers</a></div>
       <div class="nav-item"><a href="#about">About</a></div>
       <div class="nav-item"><a href="#courses">Courses</a></div>
       <div class="nav-item"><a href="#contact">Contact</a></div>
@@ -456,6 +507,62 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
       </div>
     </div>
   </section>
+<!-- Add this CSS -->
+
+
+<!-- Add this HTML -->
+<section class="teachers-section" id="teachers">
+  <h2 class="nn">Meet Our Instructors</h2>
+  <div class="teachers-grid">
+    <!-- MD. Samsuzzman Rubel -->
+    <div class="teacher-card animate">
+
+      <h3 class="teacher-name">MD. Samsuzzman Rubel</h3>
+      <p class="teacher-qualifications">
+        Computer Hardware & Software Engineer<br>
+        Graphic Designer, Web/App Designer<br>
+        2D Animation Maker, Digital Marketer<br>
+        Affiliate & CPA Marketer
+      </p>
+    </div>
+    
+    <!-- Al Aminur Rashid -->
+    <div class="teacher-card animate">
+
+      <h3 class="teacher-name">Al Aminur Rashid</h3>
+      <p class="teacher-qualifications">
+        Senior Teacher (ICT)<br>
+        ICT 4E District Ambassador a2i<br>
+        ICT Master Trainer
+      </p>
+    </div>
+    
+    <!-- MD. Razibul Hasan -->
+    <div class="teacher-card animate">
+
+      <h3 class="teacher-name">MD. Razibul Hasan</h3>
+      <p class="teacher-qualifications">
+        B.A (Hons)<br>
+        M.A in English Literature<br>
+        MBA (Finance and Banking)
+      </p>
+    </div>
+    
+    <!-- MD. Afjal Husain -->
+    <div class="teacher-card animate">
+
+      <h3 class="teacher-name">MD. Afjal Husain</h3>
+      <p class="teacher-qualifications">
+        Diploma in Computer<br>
+        Graphic Designer & Digital Marketer
+      </p>
+    </div>
+  </div>
+  <p class="text-center" style="font-size: 1.4rem; margin-top: 3rem; color: var(--accent)">
+    Note: Fri, Sat and evening batch benefits are available for employees
+  </p>
+</section>
+
 
   <!-- Contact Section -->
   <section class="contact-section" id="contact">
@@ -519,6 +626,7 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
 </a>
   </footer>
   <script>
+  
     // Theme toggle
     const btn = document.getElementById('themeToggle');
     btn.addEventListener('click', () => {
@@ -554,4 +662,3 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
     document.querySelectorAll('.animate').forEach(el => observer.observe(el));
   </script>
 </body>
-</html>
