@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+  <link rel="shortcut icon" href="logos.png" type="image/x-icon" />
   <title>Advance IT, Sylhet</title>
   <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -336,12 +335,12 @@ footer{
   .gallery-caption h3 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
-    color: var(--secondary);
+    color:#000000;
   }
   
   .gallery-caption p {
     font-size: 1.4rem;
-    color: var(--accent);
+    color:#000000;
   }
 
 
@@ -458,8 +457,8 @@ footer{
    -webkit-filter: hue-rotate(-360deg);
  }
 }
-}
-    }
+
+    
     .about-text p  { font-size:1.6rem; color:var(--accent); margin-bottom:2rem; }
 
     /* === COURSES === */
@@ -476,8 +475,8 @@ footer{
    -webkit-filter: hue-rotate(-360deg);
  }
 }
-}
-    }
+
+    
     .courses-section {
       padding:10rem 5%; background: linear-gradient(to bottom, var(--dark) 20%, var(--primary) 100%);
     }
@@ -507,7 +506,7 @@ footer{
     .course-title::after { content:''; position:absolute; bottom:0; left:0; width:40px; height:2px; background:var(--secondary); }
     .price-container { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:1.2rem; }
     .price-original { font-size:1.6rem; color:var(--accent); text-decoration:line-through; }
-    .  .price-discount a { font-size:2.4rem; color:var(--secondary); font-weight:700; }
+    .price-discount a { font-size:2.4rem; color:var(--secondary); font-weight:700; }
    .price-discount { font-size:2.4rem; color:var(--secondary); font-weight:700; }
     .course-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; }
     .duration    { font-size:1.3rem; color:var(--accent); display:flex; align-items:center; gap:0.6rem; }
@@ -637,19 +636,24 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
    -webkit-filter: hue-rotate(-360deg);
  }
 }
+.logos{
+  border-radius: 10000%;
+  height: 150%;
+  width: 15%;
 }
-    }
+    
   </style>
 </head>
 <body>
   <nav class="nav-container">
+    <img sizes="" srcset="" src="logos.jpg" alt="" class="logos">
     <div class="logo">Advance IT</div>
-    <button class="theme-toggle" id="themeToggle">Light Theme</button>
+
     <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     <div class="nav-menu" id="navMenu">
       <div class="ai-search-trigger" id="aiSearchTrigger">
   <i class='bx bx-search-alt'></i>
-</div>
+</div><button class="theme-toggle" id="themeToggle">Light Theme</button>
       <div class="nav-item"><a href="#home">Home</a></div>
       <div class="nav-item"><a href="#teachers">Teachers</a></div>
       <div class="nav-item"><a href="#about">About</a></div>
@@ -838,6 +842,8 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
 <!-- Add this HTML -->
 <section class="teachers-section" id="teachers">
   <h2 class="nn">Meet Our Instructors</h2>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<dotlottie-player src="https://lottie.host/188f152d-44e5-4ebf-a364-477111fefe81/HWW3L4ysaX.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
   <div class="teachers-grid">
     <!-- MD. Samsuzzman Rubel -->
     <div class="teacher-card animate">
@@ -854,25 +860,35 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
     <!-- Al Aminur Rashid -->
     <div class="teacher-card animate">
 
-      <h3 class="teacher-name">Al Aminur Rashid</h3>
+      <h3 class="teacher-name">Muhammad Masuk Mia</h3>
       <p class="teacher-qualifications">
-        Senior Teacher (ICT)<br>
-        ICT 4E District Ambassador a2i<br>
-        ICT Master Trainer
+        Assistant Professor<br>
+        AL-Emad Degree college chandarpur,Gopalgonj<br>
+        British teacher certified Engilish Languge teacher.
       </p>
     </div>
     
     <!-- MD. Razibul Hasan -->
     <div class="teacher-card animate">
 
-      <h3 class="teacher-name">MD. Razibul Hasan</h3>
+      <h3 class="teacher-name">Iqbal Mahfuj</h3>
       <p class="teacher-qualifications">
-        B.A (Hons)<br>
-        M.A in English Literature<br>
-        MBA (Finance and Banking)
+        HONOURSE 1st year <br>
+        Science teahcer<br>
+
       </p>
     </div>
-    
+      <!-- MD. Razibul Hasan -->
+      <div class="teacher-card animate">
+
+        <h3 class="teacher-name">Nahid Sultan</h3>
+        <p class="teacher-qualifications">
+          Freelancer <br>
+           Disital Marketar<br>
+
+  
+        </p>
+      </div>
     <!-- MD. Afjal Husain -->
     <div class="teacher-card animate">
 
@@ -889,24 +905,26 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
 </section>
 <!-- Add this HTML where you want the gallery to appear -->
 <section class="gallery-section" id="gallery">
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<dotlottie-player src="https://lottie.host/a164fc49-8a18-4192-8eea-039597a25f38/jFnnhRFhWo.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
   <h2 class="gallery-title">Our Gallery</h2>
   <div class="gallery-container">
     <div class="gallery-grid">
       <!-- Gallery Item 1 -->
       <div class="gallery-item animate">
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Students in classroom">
+        <img src="School.jpg">
         <div class="gallery-caption">
-          <h3>Classroom Learning</h3>
-          <p>Our students engaged in hands-on training</p>
+          <h3> Excel software</h3>
+          <p>Excel Admition Software</p>
         </div>
       </div>
       
       <!-- Gallery Item 2 -->
       <div class="gallery-item animate">
-        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Web development class">
+        <img src="Admition.jpg">
         <div class="gallery-caption">
-          <h3>Web Development</h3>
-          <p>Students working on coding projects</p>
+          <h3> Excel software</h3>
+          <p>School Mark Sheet</p>
         </div>
       </div>
       
@@ -992,9 +1010,9 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
     const message = document.getElementById('message').value;
     
     const subject = encodeURIComponent('New message from ' + name);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${userEmail}\n\nMessage:\n${message}`);
+    const body = encodeURIComponent(Name: ${name}\nEmail: ${userEmail}\n\nMessage:\n${message});
     
-    window.location.href = `mailto:advanceitds@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = mailto:advanceitds@gmail.com?subject=${subject}&body=${body};
   }
 </script>
 </section>
@@ -1360,7 +1378,7 @@ function displayResults(results, searchTerm) {
           <span><i class='bx bx-dollar-circle'></i> ${result.details.discountPrice} <small>(was ${result.details.originalPrice})</small></span>
         </div>
         <div class="ai-result-features">
-          ${result.details.features.map(f => `<span><i class='bx bx-check'></i> ${f}</span>`).join('')}
+          ${result.details.features.map(f => <span><i class='bx bx-check'></i> ${f}</span>).join('')}
         </div>
       `;
     } else if (result.type === 'Faculty') {
@@ -1436,7 +1454,7 @@ function highlightMatches(text, term) {
   
   terms.forEach(t => {
     if (t.length > 2) { // Only highlight terms longer than 2 chars
-      const regex = new RegExp(`(${escapeRegExp(t)})`, 'gi');
+      const regex = new RegExp((${escapeRegExp(t)}), 'gi');
       highlighted = highlighted.replace(regex, '<span class="highlight">$1</span>');
     }
   });
