@@ -264,6 +264,85 @@ footer{
   font-size: 65%;
   
 }
+  .gallery-section {
+    padding: 10rem 5%;
+    background: linear-gradient(to bottom, var(--primary) 20%, var(--dark) 100%);
+  }
+  
+  .gallery-title {
+    text-align: center;
+    font-size: 3.6rem;
+    color: var(--secondary);
+    margin-bottom: 4rem;
+    animation: fadeIn 1s ease forwards;
+    background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 15s infinite linear;
+  }
+  
+  .gallery-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(var(--secondary), 0.1);
+  }
+  
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+  
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(var(--dark), 0.8);
+    color: var(--light);
+    padding: 1.5rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .gallery-item:hover .gallery-caption {
+    transform: translateY(0);
+  }
+  
+  .gallery-caption h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--secondary);
+  }
+  
+  .gallery-caption p {
+    font-size: 1.4rem;
+    color: var(--accent);
+  }
 
 
 
@@ -808,7 +887,67 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
     Note: Fri, Sat and evening batch benefits are available for employees
   </p>
 </section>
-
+<!-- Add this HTML where you want the gallery to appear -->
+<section class="gallery-section" id="gallery">
+  <h2 class="gallery-title">Our Gallery</h2>
+  <div class="gallery-container">
+    <div class="gallery-grid">
+      <!-- Gallery Item 1 -->
+      <div class="gallery-item animate">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Students in classroom">
+        <div class="gallery-caption">
+          <h3>Classroom Learning</h3>
+          <p>Our students engaged in hands-on training</p>
+        </div>
+      </div>
+      
+      <!-- Gallery Item 2 -->
+      <div class="gallery-item animate">
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Web development class">
+        <div class="gallery-caption">
+          <h3>Web Development</h3>
+          <p>Students working on coding projects</p>
+        </div>
+      </div>
+      
+      <!-- Gallery Item 3 -->
+      <div class="gallery-item animate">
+        <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Digital marketing class">
+        <div class="gallery-caption">
+          <h3>Digital Marketing</h3>
+          <p>Learning modern marketing techniques</p>
+        </div>
+      </div>
+      
+      <!-- Gallery Item 4 -->
+      <div class="gallery-item animate">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Graduation ceremony">
+        <div class="gallery-caption">
+          <h3>Certificate Award</h3>
+          <p>Our graduates receiving certificates</p>
+        </div>
+      </div>
+      
+      <!-- Gallery Item 5 -->
+      <div class="gallery-item animate">
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Computer lab">
+        <div class="gallery-caption">
+          <h3>Computer Lab</h3>
+          <p>Our fully equipped computer lab</p>
+        </div>
+      </div>
+      
+      <!-- Gallery Item 6 -->
+      <div class="gallery-item animate">
+        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Group discussion">
+        <div class="gallery-caption">
+          <h3>Group Discussion</h3>
+          <p>Students collaborating on projects</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- Contact Section -->
   <section class="contact-section" id="contact">
@@ -908,199 +1047,497 @@ background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
     document.querySelectorAll('.animate').forEach(el => observer.observe(el));
   </script>
   <script>
-  // AI Search System
-  const aiSearchTrigger = document.getElementById('aiSearchTrigger');
-  const aiSearchContainer = document.getElementById('aiSearchContainer');
-  const aiSearchClose = document.getElementById('aiSearchClose');
-  const aiSearchInput = document.getElementById('aiSearchInput');
-  const aiSuggestions = document.getElementById('aiSuggestions');
-  const aiResultsContainer = document.getElementById('aiResultsContainer');
+// Enhanced AI Search System
+const aiSearchTrigger = document.getElementById('aiSearchTrigger');
+const aiSearchContainer = document.getElementById('aiSearchContainer');
+const aiSearchClose = document.getElementById('aiSearchClose');
+const aiSearchInput = document.getElementById('aiSearchInput');
+const aiSuggestions = document.getElementById('aiSuggestions');
+const aiResultsContainer = document.getElementById('aiResultsContainer');
+
+// Enhanced Content Index with more metadata
+const contentIndex = [
+  {
+    id: 'web-dev',
+    type: 'Course',
+    title: 'Web Development Course',
+    content: 'Our comprehensive web development course covers modern technologies including JavaScript, React JS, Node JS, Express JS, MongoDB, Vercel Hosting, and Firebase. Perfect for beginners to advanced learners.',
+    details: {
+      duration: '6 months',
+      originalPrice: '৳10,500',
+      discountPrice: '৳8,500',
+      features: ['Project-based learning', 'Industry-relevant curriculum', 'Portfolio development'],
+      requirements: 'Basic computer knowledge'
+    },
+    keywords: ['web development', 'javascript', 'react', 'nodejs', 'mongodb', 'full stack', 'frontend', 'backend'],
+    synonyms: ['website development', 'web programming', 'fullstack development'],
+    link: '#courses',
+    popularity: 9 // 1-10 scale
+  },
+  {
+    id: 'cpa-marketing',
+    type: 'Course',
+    title: 'CPA Marketing Mastery',
+    content: 'Learn affiliate marketing strategies with our CPA Marketing course. Includes traffic generation methods, landing page optimization, and campaign tracking. 100% income guarantee for qualified students.',
+    details: {
+      duration: '2 months',
+      originalPrice: '৳7,500',
+      discountPrice: '৳5,500',
+      features: ['Real campaign examples', 'Income verification', 'Ongoing support'],
+      requirements: 'Internet access'
+    },
+    keywords: ['cpa marketing', 'affiliate marketing', 'make money online', 'digital marketing'],
+    synonyms: ['cost per action', 'performance marketing'],
+    link: '#courses',
+    popularity: 7
+  },
+  {
+    id: 'teachers',
+    type: 'Faculty',
+    title: 'Our Expert Instructors',
+    content: 'Learn from industry professionals and certified trainers. Our faculty includes computer engineers, ICT specialists, and English language experts with years of teaching experience.',
+    details: {
+      teachers: [
+        {
+          name: 'MD. Samsuzzman Rubel',
+          qualifications: 'Computer Hardware & Software Engineer, Graphic Designer'
+        },
+        {
+          name: 'Al Aminur Rashid',
+          qualifications: 'ICT Master Trainer, Senior Teacher'
+        }
+      ]
+    },
+    keywords: ['teachers', 'instructors', 'faculty', 'trainers'],
+    synonyms: ['educators', 'professors'],
+    link: '#teachers',
+    popularity: 6
+  },
+  {
+    id: 'contact',
+    type: 'Support',
+    title: 'Contact Information',
+    content: 'Reach out for course inquiries, registration, or support. We typically respond within 24 hours during business days.',
+    details: {
+      email: 'advanceitds@gmail.com',
+      phones: ['+8801744525287', '+8801766417142'],
+      hours: '9:00 AM - 5:00 PM (Sat-Thu)'
+    },
+    keywords: ['contact', 'email', 'phone', 'support', 'help'],
+    synonyms: ['reach us', 'get in touch'],
+    link: '#contact',
+    popularity: 5
+  },
+  {
+    id: 'about',
+    type: 'Information',
+    title: 'About Advance IT',
+    content: 'We provide industry-leading technical education with practical learning approaches. Established in 2015, we have trained over 1,000 students in various IT disciplines.',
+    details: {
+      features: ['Expert-led instruction', 'Project-based learning', 'Career support'],
+      benefits: ['Flexible scheduling', 'Hands-on practice', 'Job placement assistance']
+    },
+    keywords: ['about us', 'academy', 'institute', 'education'],
+    synonyms: ['who we are', 'our mission'],
+    link: '#about',
+    popularity: 4
+  }
+];
+
+// Initialize search
+aiSearchTrigger.addEventListener('click', () => {
+  aiSearchContainer.classList.add('active');
+  aiSearchInput.focus();
+  trackUserAction('search_opened');
+});
+
+aiSearchClose.addEventListener('click', () => {
+  aiSearchContainer.classList.remove('active');
+  aiSearchInput.value = '';
+  showDefaultResults();
+  trackUserAction('search_closed');
+});
+
+// Enhanced suggestion chips with dynamic generation
+function updateSuggestions() {
+  // Clear existing suggestions
+  aiSuggestions.innerHTML = '';
   
-  // Content Index
-  const contentIndex = [
-    {
-      id: 'web-dev',
-      type: 'Course',
-      title: 'Web Development Course',
-      content: 'Our comprehensive web development course covers JavaScript, React JS, Node JS, Express JS, MongoDB, Vercel Hosting, and Firebase. Duration: 6 months. Original price: ৳10,500, Discount price: ৳8,500.',
-      keywords: ['web', 'development', 'javascript', 'react', 'node', 'mongodb', 'hosting'],
-      link: '#courses'
-    },
-    {
-      id: 'cpa-marketing',
-      type: 'Course',
-      title: 'CPA Marketing',
-      content: 'Learn affiliate marketing strategies with our CPA Marketing course. 100% income guarantee. Duration: 2 months. Original price: ৳7,500, Discount price: ৳5,500.',
-      keywords: ['cpa', 'marketing', 'affiliate', 'income'],
-      link: '#courses'
-    },
-    {
-      id: 'teachers',
-      type: 'Teachers',
-      title: 'Our Expert Instructors',
-      content: 'Meet our qualified teachers: MD. Samsuzzman Rubel (Computer Engineer), Al Aminur Rashid (ICT Master Trainer), MD. Razibul Hasan (English Literature), MD. Afjal Husain (Graphic Designer).',
-      keywords: ['teacher', 'instructor', 'expert', 'qualified'],
-      link: '#teachers'
-    },
-    {
-      id: 'contact',
-      type: 'Contact',
-      title: 'Contact Information',
-      content: 'Email: advanceitds@gmail.com, Phone: +8801744525287 or +8801766417142. Get in touch for course inquiries or support.',
-      keywords: ['contact', 'email', 'phone', 'support'],
-      link: '#contact'
-    },
-    {
-      id: 'about',
-      type: 'About',
-      title: 'About Advance IT',
-      content: 'We provide industry-leading technical education with practical learning approaches. Features include expert-led instruction, project-based learning, career support, and flexible scheduling.',
-      keywords: ['about', 'academy', 'education', 'learning'],
-      link: '#about'
-    }
-  ];
-
-  // Initialize search
-  aiSearchTrigger.addEventListener('click', () => {
-    aiSearchContainer.classList.add('active');
-    aiSearchInput.focus();
-  });
-
-  aiSearchClose.addEventListener('click', () => {
-    aiSearchContainer.classList.remove('active');
-    aiSearchInput.value = '';
-    showDefaultResults();
-  });
-
-  // Suggestion chips
-  aiSuggestions.querySelectorAll('.ai-suggestion-chip').forEach(chip => {
+  // Generate suggestions based on popularity and recent searches
+  const popularSuggestions = contentIndex
+    .sort((a, b) => b.popularity - a.popularity)
+    .slice(0, 6);
+  
+  popularSuggestions.forEach(item => {
+    const chip = document.createElement('div');
+    chip.className = 'ai-suggestion-chip';
+    chip.textContent = item.title;
     chip.addEventListener('click', () => {
-      aiSearchInput.value = chip.textContent;
-      performAISearch(aiSearchInput.value);
+      aiSearchInput.value = item.title;
+      performAISearch(item.title);
+      trackUserAction('suggestion_used', { suggestion: item.title });
     });
+    aiSuggestions.appendChild(chip);
   });
+}
 
-  // Search with debounce
-  let searchDebounce;
-  aiSearchInput.addEventListener('input', (e) => {
-    clearTimeout(searchDebounce);
-    
-    if (e.target.value.trim() === '') {
-      showDefaultResults();
-      return;
+// Search with debounce and analytics
+let searchDebounce;
+let lastSearchTerm = '';
+let searchSessionId = generateSessionId();
+
+aiSearchInput.addEventListener('input', (e) => {
+  clearTimeout(searchDebounce);
+  const currentTerm = e.target.value.trim();
+  
+  if (currentTerm === '') {
+    showDefaultResults();
+    return;
+  }
+  
+  // Show typing indicator with animation
+  showTypingIndicator();
+  
+  searchDebounce = setTimeout(() => {
+    if (currentTerm !== lastSearchTerm) {
+      trackUserAction('search_performed', { term: currentTerm });
+      lastSearchTerm = currentTerm;
     }
-    
-    // Show typing indicator
-    aiResultsContainer.innerHTML = `
-      <div class="ai-tying">
-        <div class="ai-typing">Searching</div>
-        <div class="ai-typing-dots">
-          <div class="ai-typing-dot"></div>
-          <div class="ai-typing-dot"></div>
-          <div class="ai-typing-dot"></div>
-        </div>
-      </div>
-    `;
-    
-    searchDebounce = setTimeout(() => {
-      performAISearch(e.target.value);
-    }, 500);
+    performAISearch(currentTerm);
+  }, 300);
+});
+
+// Enhanced search function with NLP features
+function performAISearch(query) {
+  const searchTerm = query.toLowerCase().trim();
+  
+  if (searchTerm === '') {
+    showDefaultResults();
+    return;
+  }
+  
+  // Process query for better matching
+  const processedQuery = processQuery(searchTerm);
+  
+  // Score and rank results
+  const scoredResults = contentIndex.map(item => {
+    return {
+      ...item,
+      score: calculateRelevanceScore(item, processedQuery)
+    };
+  }).filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+  
+  displayResults(scoredResults, searchTerm);
+}
+
+// Advanced query processing
+function processQuery(query) {
+  // Common question patterns
+  const questionPatterns = {
+    'price|cost|fee': 'searching for pricing information',
+    'duration|length|time': 'searching for course duration',
+    'start|begin|enroll': 'searching for enrollment info',
+    'teacher|instructor|trainer': 'searching for faculty info',
+    'contact|email|phone': 'searching for contact info'
+  };
+  
+  // Extract intent
+  let intent = 'general_search';
+  for (const [pattern, detectedIntent] of Object.entries(questionPatterns)) {
+    if (new RegExp(pattern).test(query)) {
+      intent = detectedIntent;
+      break;
+    }
+  }
+  
+  // Extract entities
+  const entities = [];
+  contentIndex.forEach(item => {
+    if (new RegExp(item.type.toLowerCase()).test(query)) {
+      entities.push(item.type.toLowerCase());
+    }
+    if (item.keywords.some(keyword => query.includes(keyword))) {
+      entities.push(...item.keywords.filter(keyword => query.includes(keyword)));
+    }
   });
+  
+  return {
+    original: query,
+    tokens: query.split(/\s+/),
+    intent,
+    entities: [...new Set(entities)], // Remove duplicates
+    isQuestion: /\?$/.test(query)
+  };
+}
 
-  // Perform search
-  function performAISearch(query) {
-    const searchTerm = query.toLowerCase().trim();
-    
-    if (searchTerm === '') {
-      showDefaultResults();
-      return;
+// Enhanced relevance scoring
+function calculateRelevanceScore(item, processedQuery) {
+  let score = 0;
+  
+  // 1. Exact matches
+  if (item.title.toLowerCase().includes(processedQuery.original)) {
+    score += 50;
+  }
+  
+  // 2. Partial matches in title
+  processedQuery.tokens.forEach(token => {
+    if (item.title.toLowerCase().includes(token)) {
+      score += 20;
     }
-    
-    // Simple AI matching - in a real app you'd use more advanced NLP
-    const results = contentIndex.filter(item => {
-      const inTitle = item.title.toLowerCase().includes(searchTerm);
-      const inContent = item.content.toLowerCase().includes(searchTerm);
-      const inKeywords = item.keywords.some(keyword => 
-        keyword.toLowerCase().includes(searchTerm)
-      );
-      
-      return inTitle || inContent || inKeywords;
-    });
-    
-    displayResults(results, searchTerm);
+  });
+  
+  // 3. Content matches
+  if (item.content.toLowerCase().includes(processedQuery.original)) {
+    score += 30;
   }
-
-  // Display results
-  function displayResults(results, searchTerm) {
-    if (results.length === 0) {
-      aiResultsContainer.innerHTML = `
-        <div class="ai-no-results">
-          <p>No results found for "${searchTerm}"</p>
-          <p>Try different keywords or ask a question</p>
-        </div>
-      `;
-      return;
+  
+  processedQuery.tokens.forEach(token => {
+    if (item.content.toLowerCase().includes(token)) {
+      score += 10;
     }
-    
-    aiResultsContainer.innerHTML = '';
-    
-    results.forEach(result => {
-      const resultCard = document.createElement('div');
-      resultCard.className = 'ai-result-card';
-      
-      // Highlight matching text
-      const highlightedTitle = highlightMatches(result.title, searchTerm);
-      const highlightedContent = highlightMatches(
-        result.content.substring(0, 200) + (result.content.length > 200 ? '...' : ''), 
-        searchTerm
-      );
-      
-      resultCard.innerHTML = `
-        <div class="ai-result-title">
-          ${highlightedTitle}
-          <span class="ai-result-type">${result.type}</span>
-        </div>
-        <div class="ai-result-content">${highlightedContent}</div>
-      `;
-      
-      resultCard.addEventListener('click', () => {
-        window.location.href = result.link;
-        aiSearchContainer.classList.remove('active');
-      });
-      
-      aiResultsContainer.appendChild(resultCard);
-    });
+  });
+  
+  // 4. Keyword matches
+  processedQuery.tokens.forEach(token => {
+    if (item.keywords.includes(token)) {
+      score += 15;
+    }
+    if (item.synonyms.includes(token)) {
+      score += 10;
+    }
+  });
+  
+  // 5. Intent matching
+  if (processedQuery.intent.includes('pricing') && item.details?.discountPrice) {
+    score += 25;
   }
-
-  // Highlight matching text
-  function highlightMatches(text, term) {
-    if (!term) return text;
-    
-    const regex = new RegExp(`(${term})`, 'gi');
-    return text.replace(regex, '<span class="highlight">$1</span>');
+  if (processedQuery.intent.includes('duration') && item.details?.duration) {
+    score += 25;
   }
+  
+  // 6. Entity matching
+  if (processedQuery.entities.includes(item.type.toLowerCase())) {
+    score += 30;
+  }
+  
+  // 7. Popularity boost
+  score += item.popularity;
+  
+  return score;
+}
 
-  // Show default state
-  function showDefaultResults() {
+// Enhanced results display with rich snippets
+function displayResults(results, searchTerm) {
+  if (results.length === 0) {
     aiResultsContainer.innerHTML = `
       <div class="ai-no-results">
-        <p>Type your question or search term above</p>
-        <p>Try: "What's included in the Web Development course?"</p>
+        <p>No results found for "${escapeHtml(searchTerm)}"</p>
+        <p>Try these suggestions:</p>
+        <ul style="text-align: left; margin-top: 1rem;">
+          <li>Check your spelling</li>
+          <li>Use more general terms</li>
+          <li>Ask a question like "What's in the web development course?"</li>
+        </ul>
       </div>
     `;
+    return;
   }
-
-  // Keyboard shortcuts
-  document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.key === 'k') {
-      e.preventDefault();
-      aiSearchContainer.classList.add('active');
-      aiSearchInput.focus();
+  
+  aiResultsContainer.innerHTML = '';
+  
+  results.slice(0, 5).forEach(result => {
+    const resultCard = document.createElement('div');
+    resultCard.className = 'ai-result-card';
+    
+    // Generate rich content based on result type
+    let richContent = '';
+    
+    if (result.type === 'Course') {
+      richContent = `
+        <div class="ai-result-meta">
+          <span><i class='bx bx-time'></i> ${result.details.duration}</span>
+          <span><i class='bx bx-dollar-circle'></i> ${result.details.discountPrice} <small>(was ${result.details.originalPrice})</small></span>
+        </div>
+        <div class="ai-result-features">
+          ${result.details.features.map(f => `<span><i class='bx bx-check'></i> ${f}</span>`).join('')}
+        </div>
+      `;
+    } else if (result.type === 'Faculty') {
+      richContent = `
+        <div class="ai-result-teachers">
+          ${result.details.teachers.map(t => `
+            <div class="ai-teacher">
+              <strong>${t.name}</strong>: ${t.qualifications}
+            </div>
+          `).join('')}
+        </div>
+      `;
     }
     
-    if (e.key === 'Escape') {
+    resultCard.innerHTML = `
+      <div class="ai-result-title">
+        ${highlightMatches(result.title, searchTerm)}
+        <span class="ai-result-type">${result.type}</span>
+      </div>
+      <div class="ai-result-content">
+        ${highlightMatches(truncateContent(result.content), searchTerm)}
+      </div>
+      ${richContent}
+      <div class="ai-result-footer">
+        <span class="ai-relevance">Relevance: ${Math.round(result.score)}%</span>
+        <button class="ai-view-more">View details <i class='bx bx-chevron-right'></i></button>
+      </div>
+    `;
+    
+    resultCard.addEventListener('click', () => {
+      window.location.href = result.link;
       aiSearchContainer.classList.remove('active');
+      trackUserAction('result_clicked', { 
+        resultId: result.id,
+        position: results.indexOf(result) + 1
+      });
+    });
+    
+    aiResultsContainer.appendChild(resultCard);
+  });
+}
+
+// Helper functions
+function showTypingIndicator() {
+  aiResultsContainer.innerHTML = `
+    <div class="ai-typing-indicator">
+      <div class="ai-typing">Understanding your query</div>
+      <div class="ai-typing-dots">
+        <div class="ai-typing-dot"></div>
+        <div class="ai-typing-dot"></div>
+        <div class="ai-typing-dot"></div>
+      </div>
+      <div class="ai-typing-hint">Analyzing ${lastSearchTerm.length > 10 ? 'complex' : ''} request...</div>
+    </div>
+  `;
+}
+
+function truncateContent(text, maxLength = 200) {
+  return text.length > maxLength ? 
+    text.substring(0, maxLength) + '...' : 
+    text;
+}
+
+function highlightMatches(text, term) {
+  if (!term) return escapeHtml(text);
+  
+  // Escape HTML first to prevent injection
+  const safeText = escapeHtml(text);
+  
+  // Highlight all variations of the term
+  const terms = term.split(/\s+/);
+  let highlighted = safeText;
+  
+  terms.forEach(t => {
+    if (t.length > 2) { // Only highlight terms longer than 2 chars
+      const regex = new RegExp(`(${escapeRegExp(t)})`, 'gi');
+      highlighted = highlighted.replace(regex, '<span class="highlight">$1</span>');
     }
   });
+  
+  return highlighted;
+}
+
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function generateSessionId() {
+  return 'ssn_' + Math.random().toString(36).substr(2, 9);
+}
+
+// Analytics tracking
+function trackUserAction(action, data = {}) {
+  const eventData = {
+    action,
+    sessionId: searchSessionId,
+    timestamp: new Date().toISOString(),
+    ...data
+  };
+  
+  // In a real app, you would send this to your analytics service
+  console.log('Tracking event:', eventData);
+  
+  // Example: Store in localStorage for session tracking
+  const searchHistory = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+  searchHistory.push(eventData);
+  localStorage.setItem('searchHistory', JSON.stringify(searchHistory.slice(-50))); // Keep last 50 events
+}
+
+// Initialize
+updateSuggestions();
+showDefaultResults();
+
+// Keyboard shortcuts with more options
+document.addEventListener('keydown', (e) => {
+  // Ctrl+K or Cmd+K to open search
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    aiSearchContainer.classList.add('active');
+    aiSearchInput.focus();
+  }
+  
+  // Esc to close
+  if (e.key === 'Escape') {
+    aiSearchContainer.classList.remove('active');
+  }
+  
+  // Up/Down arrows to navigate results when search is open
+  if (aiSearchContainer.classList.contains('active') && 
+      (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+    e.preventDefault();
+    const results = aiResultsContainer.querySelectorAll('.ai-result-card');
+    if (results.length === 0) return;
+    
+    const currentActive = document.activeElement;
+    let nextIndex = 0;
+    
+    if (currentActive.classList.contains('ai-result-card')) {
+      const currentIndex = Array.from(results).indexOf(currentActive);
+      nextIndex = e.key === 'ArrowDown' ? 
+        Math.min(currentIndex + 1, results.length - 1) : 
+        Math.max(currentIndex - 1, 0);
+    }
+    
+    results[nextIndex].focus();
+  }
+  
+  // Enter to open selected result
+  if (e.key === 'Enter' && 
+      aiSearchContainer.classList.contains('active') &&
+      document.activeElement.classList.contains('ai-result-card')) {
+    document.activeElement.click();
+  }
+});
+
+// Add focus styles for keyboard navigation
+document.addEventListener('focusin', (e) => {
+  if (e.target.classList.contains('ai-result-card')) {
+    e.target.style.transform = 'translateX(5px)';
+    e.target.style.boxShadow = '0 5px 15px rgba(var(--secondary), 0.2)';
+  }
+});
+
+document.addEventListener('focusout', (e) => {
+  if (e.target.classList.contains('ai-result-card')) {
+    e.target.style.transform = '';
+    e.target.style.boxShadow = '';
+  }
+});
 </script>
 </body>
