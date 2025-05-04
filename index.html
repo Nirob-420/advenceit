@@ -21,11 +21,7 @@
       --accent: #8892b0;
       --light: #ccd6f6;
       --dark: #020c1b;
-      --font-base: 62.5%;
-      --space-unit: 1rem;
-      --transition: all 0.3s ease;
     }
-
     /* Light theme overrides */
     [data-theme="light"] {
       --primary: #f0f0f5;
@@ -35,138 +31,103 @@
       --dark: #ffffff;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* === GLOBAL RESET & FONTS === */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+    html { scroll-behavior:smooth; font-size:62.5%; }
+    body { background: var(--primary); color: var(--light); line-height:1.6; overflow-x:hidden; }
 
-    html {
-      scroll-behavior: smooth;
-      font-size: var(--font-base);
-    }
-
-    body {
-      background: var(--primary);
-      color: var(--light);
-      line-height: 1.6;
-      overflow-x: hidden;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-
-    /* Fluid typography */
-    @media (min-width: 1200px) {
-      html {
-        font-size: 70%;
-      }
-    }
-
-    @media (max-width: 768px) {
-      html {
-        font-size: 58%;
-      }
-    }
-
-    /* === UTILITY CLASSES === */
-    .container {
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 calc(var(--space-unit) * 2);
-    }
-
-    .section {
-      padding: calc(var(--space-unit) * 10) 5%;
-    }
-
-    .animate {
-      opacity: 0;
-    }
-
-    .animate.visible {
-      animation: fadeIn 0.8s ease forwards;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    .gradient-text {
-      background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -webkit-animation: hue 15s infinite linear;
-    }
-
-    /* === KEYFRAMES === */
-    @keyframes slideDown {
-      from { transform: translateY(-100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes hue {
-      from { -webkit-filter: hue-rotate(0deg); }
-      to { -webkit-filter: hue-rotate(-360deg); }
-    }
-
-    /* === NAVIGATION === */
+    /* === UPDATED NAVIGATION === */
     .nav-container {
       position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
-      background: rgba(var(--dark), 0.9);
+      background: rgba(var(--dark), 0.95);
       backdrop-filter: blur(15px);
-      padding: 2rem 8%;
+      padding: 1.5rem 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
-      border-bottom: 1px solid rgba(var(--secondary), 0.15);
-      animation: slideDown 0.6s ease-out forwards;
+      border-bottom: 1px solid rgba(var(--secondary), 0.1);
+      transform: translateY(-100%);
+      animation: slideDownNav 0.6s ease-out forwards 0.3s;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
 
-    .logo {
-      font-size: 2.4rem;
-      color: var(--secondary);
-      cursor: pointer;
-      animation: popIn 0.8s ease-out forwards;
+    @keyframes slideDownNav {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .nav-brand {
       display: flex;
       align-items: center;
       gap: 1rem;
+      text-decoration: none;
     }
 
     .logos {
+      height: 50px;
+      width: 50px;
       border-radius: 50%;
-      height: 4rem;
-      width: 4rem;
       object-fit: cover;
+      transition: transform 0.3s ease;
+      animation: fadeInLogo 0.8s ease-out forwards 0.5s;
+    }
+
+    @keyframes fadeInLogo {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .logo {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--secondary);
+      background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-animation: hue 15s infinite linear;
+      animation: popInLogo 0.8s ease-out forwards 0.7s;
+    }
+
+    @keyframes popInLogo {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .ai-search-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(var(--secondary), 0.1);
+      color: var(--secondary);
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideInSearch 0.5s ease-out forwards 0.9s;
+    }
+
+    @keyframes slideInSearch {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .ai-search-trigger:hover {
+      background: rgba(var(--secondary), 0.2);
+      transform: scale(1.1);
     }
 
     .theme-toggle {
@@ -174,16 +135,30 @@
       border: 2px solid var(--secondary);
       color: var(--secondary);
       padding: 0.6rem 1.2rem;
-      border-radius: 4px;
+      border-radius: 30px;
       font-size: 1.4rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: var(--transition);
-      white-space: nowrap;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: slideInTheme 0.5s ease-out forwards 1.1s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @keyframes slideInTheme {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .theme-toggle:hover {
-      background: var(--secondary);
-      color: var(--primary);
+      background: rgba(var(--secondary), 0.2);
+    }
+
+    .theme-toggle i {
+      font-size: 1.6rem;
     }
 
     .hamburger {
@@ -193,103 +168,131 @@
       cursor: pointer;
       transition: transform 0.5s ease;
       display: none;
+      opacity: 0;
+      transform: translateX(20px);
+      animation: slideInHamburger 0.5s ease-out forwards 0.9s;
       z-index: 1001;
+    }
+
+    @keyframes slideInHamburger {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     .hamburger span {
       position: absolute;
       left: 0;
       width: 100%;
-      height: 0.4rem;
-      background: var(--light);
+      height: 0.3rem;
+      background: var(--secondary);
       border-radius: 0.2rem;
       transition: all 0.5s ease;
     }
 
-    .hamburger span:nth-child(1) { top: 0.6rem; }
-    .hamburger span:nth-child(2) { top: 1.5rem; }
-    .hamburger span:nth-child(3) { top: 2.4rem; }
+    .hamburger span:nth-child(1) {
+      top: 0.8rem;
+    }
 
-    .hamburger.active span:nth-child(1) { transform: translateY(0.9rem) rotate(45deg); }
-    .hamburger.active span:nth-child(2) { opacity: 0; }
-    .hamburger.active span:nth-child(3) { transform: translateY(-0.9rem) rotate(-45deg); }
+    .hamburger span:nth-child(2) {
+      top: 1.6rem;
+      opacity: 1;
+    }
+
+    .hamburger span:nth-child(3) {
+      top: 2.4rem;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(0.8rem) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-0.8rem) rotate(-45deg);
+    }
 
     .nav-menu {
       display: flex;
-      gap: 4rem;
+      gap: 3rem;
       align-items: center;
-      transition: transform 0.5s ease;
     }
 
     .nav-item {
-      font-size: 1.6rem;
+      position: relative;
       overflow: hidden;
       opacity: 0;
-      transform: translateX(50px);
+      transform: translateY(-20px);
     }
-
-    .nav-menu.active .nav-item {
-      animation: slideInRight 0.5s ease forwards;
-    }
-
-    .nav-menu.active .nav-item:nth-child(1) { animation-delay: 0.2s; }
-    .nav-menu.active .nav-item:nth-child(2) { animation-delay: 0.3s; }
-    .nav-menu.active .nav-item:nth-child(3) { animation-delay: 0.4s; }
-    .nav-menu.active .nav-item:nth-child(4) { animation-delay: 0.5s; }
 
     .nav-item a {
-      color: var(--secondary);
+      color: var(--light);
       text-decoration: none;
-      padding: 0.5rem 0;
+      font-size: 1.6rem;
+      font-weight: 500;
+      padding: 0.8rem 0;
       display: block;
       position: relative;
       transition: color 0.3s ease;
-      font-weight: bold;
     }
 
-    .nav-item a::before {
+    .nav-item a::after {
       content: '';
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 2px;
       background: var(--secondary);
-      transform: translateY(100%);
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
     }
 
-    .nav-item a:hover::before {
-      transform: translateY(0);
+    .nav-item a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
     }
 
     .nav-item a:hover {
-      color: var(--primary);
-    }
-
-    /* AI Search */
-    .ai-search-trigger {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 4rem;
-      height: 4rem;
-      border-radius: 50%;
-      background: rgba(var(--secondary), 0.1);
       color: var(--secondary);
-      font-size: 1.8rem;
-      cursor: pointer;
-      margin-left: 1.5rem;
-      transition: var(--transition);
     }
 
-    .ai-search-trigger:hover {
-      background: rgba(var(--secondary), 0.2);
-      transform: scale(1.1);
+    .nav-menu.active {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(var(--dark), 0.98);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      backdrop-filter: blur(15px);
+      z-index: 1000;
+      transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     }
 
+    .nav-menu.active .nav-item {
+      animation: slideInNavItems 0.5s ease forwards;
+    }
+
+    @keyframes slideInNavItems {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-menu.active .nav-item:nth-child(1) { animation-delay: 0.4s; }
+    .nav-menu.active .nav-item:nth-child(2) { animation-delay: 0.5s; }
+    .nav-menu.active .nav-item:nth-child(3) { animation-delay: 0.6s; }
+    .nav-menu.active .nav-item:nth-child(4) { animation-delay: 0.7s; }
+    .nav-menu.active .nav-item:nth-child(5) { animation-delay: 0.8s; }
+
+    /* AI Search Styles */
     .ai-search-container {
       position: fixed;
       top: 0;
@@ -312,7 +315,7 @@
 
     .ai-search-box {
       width: 80%;
-      max-width: 80rem;
+      max-width: 800px;
       position: relative;
     }
 
@@ -320,13 +323,13 @@
       width: 100%;
       padding: 2rem 3rem;
       font-size: 2rem;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       border: 2px solid rgba(var(--secondary), 0.3);
       border-radius: 50px;
       color: var(--light);
       outline: none;
-      transition: var(--transition);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     .ai-search-input:focus {
@@ -345,10 +348,10 @@
 
     .ai-suggestions {
       width: 80%;
-      max-width: 80rem;
+      max-width: 800px;
       margin-top: 2rem;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 1.5rem;
     }
 
@@ -359,7 +362,7 @@
       border-radius: 30px;
       font-size: 1.4rem;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       text-align: center;
       border: 1px solid rgba(var(--secondary), 0.3);
     }
@@ -371,7 +374,7 @@
 
     .ai-results-container {
       width: 80%;
-      max-width: 100rem;
+      max-width: 1000px;
       margin-top: 3rem;
       max-height: 50vh;
       overflow-y: auto;
@@ -379,12 +382,12 @@
     }
 
     .ai-result-card {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255,255,255,0.03);
       border-left: 3px solid var(--secondary);
       padding: 2rem;
       margin-bottom: 2rem;
       border-radius: 8px;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       cursor: pointer;
     }
 
@@ -424,7 +427,7 @@
       font-size: 2.5rem;
       color: var(--accent);
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
     }
 
     .ai-search-close:hover {
@@ -470,297 +473,321 @@
     .ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
     .ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
-    /* === HERO SECTION === */
-    .hero-section {
-      background: linear-gradient(45deg, var(--dark), var(--primary));
-      padding-top: 12rem;
-    }
+    /* === KEYFRAMES === */
+    @keyframes fadeIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes pulse { 0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);} }
+    @keyframes bounce { 0%,20%,50%,80%,100%{transform:translateY(0);} 40%{transform:translateY(-10px);} 60%{transform:translateY(-5px);} }
+    @keyframes hue { from { -webkit-filter: hue-rotate(0deg); } to { -webkit-filter: hue-rotate(-360deg); } }
 
+    .animate { opacity:0; }
+    .animate.visible { animation: fadeIn 0.8s ease forwards; }
+
+    /* === HERO === */
+    .hero-section { 
+      background: linear-gradient(45deg, var(--dark), var(--primary)); 
+      padding-top: 15rem;
+      padding-bottom: 10rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+    
     .hero-content {
-      max-width: 120rem;
-      margin: 0 auto;
+      max-width: 1200px; 
+      margin: 0 auto; 
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      grid-template-columns: 1fr 1fr; 
+      gap: 4rem; 
       align-items: center;
       padding: 0 5%;
     }
-
-    .hero-text h1 {
-      font-size: 4.8rem;
-      line-height: 1.2;
+    
+    .hero-text h1 { 
+      font-size: 4.8rem; 
+      color: var(--secondary); 
+      line-height: 1.2; 
       margin-bottom: 2rem;
       background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       -webkit-animation: hue 15s infinite linear;
     }
-
-    .hero-text p {
-      font-size: 1.8rem;
-      color: var(--accent);
-      margin-bottom: 3rem;
+    
+    .hero-text p { 
+      font-size: 1.8rem; 
+      color: var(--accent); 
+      margin-bottom: 3rem; 
     }
-
+    
     .cta-btn {
-      display: inline-block;
-      padding: 1.6rem 3.2rem;
+      display: inline-block; 
+      padding: 1.6rem 3.2rem; 
       background: var(--secondary);
-      color: var(--primary);
-      border-radius: 4px;
-      font-size: 1.6rem;
+      color: var(--primary); 
+      border-radius: 4px; 
+      font-size: 1.6rem; 
       font-weight: 600;
-      cursor: pointer;
+      cursor: pointer; 
       animation: bounce 2s infinite;
-      transition: var(--transition);
+      transition: transform 0.3s ease;
       text-decoration: none;
     }
-
-    .cta-btn:hover {
-      animation: pulse 1s ease-in-out forwards;
+    
+    .cta-btn:hover { 
+      animation: pulse 1s ease-in-out forwards; 
     }
 
-    /* === ABOUT SECTION === */
-    .about-section {
-      background: var(--dark);
+    /* === ABOUT === */
+    .about-section { 
+      background: var(--dark); 
+      padding: 10rem 5%;
     }
-
+    
     .about-content {
-      max-width: 120rem;
-      margin: 0 auto;
+      max-width: 1200px; 
+      margin: 0 auto; 
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      grid-template-columns: 1fr 1fr; 
+      gap: 4rem; 
       align-items: center;
-      padding: 0 5%;
     }
-
-    .about-text h2 {
-      font-size: 3.6rem;
+    
+    .about-text h2 { 
+      font-size: 3.6rem; 
       margin-bottom: 2rem;
       background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       -webkit-animation: hue 15s infinite linear;
     }
-
-    .about-text p {
-      font-size: 1.6rem;
-      color: var(--accent);
-      margin-bottom: 2rem;
+    
+    .about-text p { 
+      font-size: 1.6rem; 
+      color: var(--accent); 
+      margin-bottom: 2rem; 
     }
-
-    .course-features {
-      list-style: none;
-      margin: 2rem 0;
-    }
-
+    
     .course-features li {
       padding: 1rem 0;
       font-size: 1.6rem;
       display: flex;
       align-items: center;
       gap: 1rem;
-      transition: var(--transition);
+      color: var(--light);
     }
 
-    .course-features li:hover {
-      color: var(--secondary);
-      transform: translateX(5px);
-    }
-
-    /* === COURSES SECTION === */
-    .courses-section {
-      padding: 10rem 5%;
-      background: linear-gradient(to bottom, var(--dark) 20%, var(--primary) 100%);
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 3.6rem;
-      margin: 4rem auto 2rem;
+    /* === COURSES === */
+    .nn { 
+      text-align: center; 
+      font-size: 3.6rem; 
+      margin: 4rem auto 2rem; 
       animation: fadeIn 1s ease forwards;
       background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       -webkit-animation: hue 15s infinite linear;
     }
-
+    
+    .courses-section {
+      padding: 10rem 5%; 
+      background: linear-gradient(to bottom, var(--dark) 20%, var(--primary) 100%);
+    }
+    
     .course-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr));
-      gap: 4rem;
-      max-width: 140rem;
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 4rem; 
+      max-width: 1400px; 
       margin: 4rem auto 0;
     }
-
+    
     .course-card {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255,255,255,0.03); 
       border: 1px solid rgba(var(--secondary), 0.15);
-      border-radius: 16px;
-      padding: 2.5rem;
-      position: relative;
+      border-radius: 16px; 
+      padding: 2.5rem; 
+      position: relative; 
       overflow: hidden;
       transform: perspective(600px) rotateX(0deg);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-
+    
     .course-card:hover {
       transform: perspective(600px) rotateX(5deg) translateY(-10px);
       box-shadow: 0 15px 40px rgba(var(--secondary), 0.1);
     }
-
+    
     .course-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
+      content: ''; 
+      position: absolute; 
+      top: -50%; 
+      left: -50%; 
+      width: 200%; 
       height: 200%;
       background: linear-gradient(45deg, transparent 20%, rgba(var(--secondary), 0.08) 50%, transparent 80%);
-      transform: rotate(45deg);
+      transform: rotate(45deg); 
       transition: all 0.6s ease;
     }
-
-    .course-card:hover::before {
-      top: 150%;
-      left: 150%;
+    
+    .course-card:hover::before { 
+      top: 150%; 
+      left: 150%; 
     }
 
-    .course-media {
-      height: 22rem;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 2.5rem;
-      background: rgba(0, 0, 0, 0.3);
+    .course-media { 
+      height: 220px; 
+      border-radius: 12px; 
+      overflow: hidden; 
+      margin-bottom: 2.5rem; 
+      background: rgba(0,0,0,0.3); 
     }
-
-    .course-title {
-      font-size: 2.2rem;
-      color: var(--light);
-      margin-bottom: 1.8rem;
-      position: relative;
-      padding-bottom: 1rem;
+    
+    .course-title { 
+      font-size: 2.2rem; 
+      color: var(--light); 
+      margin-bottom: 1.8rem; 
+      position: relative; 
+      padding-bottom: 1rem; 
     }
-
-    .course-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 40px;
-      height: 2px;
-      background: var(--secondary);
+    
+    .course-title::after { 
+      content: ''; 
+      position: absolute; 
+      bottom: 0; 
+      left: 0; 
+      width: 40px; 
+      height: 2px; 
+      background: var(--secondary); 
     }
-
-    .price-container {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-      margin-bottom: 1.2rem;
+    
+    .price-container { 
+      display: flex; 
+      align-items: baseline; 
+      gap: 1.5rem; 
+      margin-bottom: 1.2rem; 
     }
-
-    .price-original {
-      font-size: 1.6rem;
-      color: var(--accent);
-      text-decoration: line-through;
+    
+    .price-original { 
+      font-size: 1.6rem; 
+      color: var(--accent); 
+      text-decoration: line-through; 
     }
-
-    .price-discount {
-      font-size: 2.4rem;
-      color: var(--secondary);
-      font-weight: 700;
+    
+    .price-discount a { 
+      font-size: 2.4rem; 
+      color: var(--secondary); 
+      font-weight: 700; 
     }
-
-    .price-discount a {
-      font-size: 2.4rem;
-      color: var(--secondary);
-      font-weight: 700;
-      text-decoration: none;
+    
+    .price-discount { 
+      font-size: 2.4rem; 
+      color: var(--secondary); 
+      font-weight: 700; 
     }
-
-    .course-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
+    
+    .course-meta { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 2rem; 
     }
-
-    .duration {
-      font-size: 1.3rem;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+    
+    .duration { 
+      font-size: 1.3rem; 
+      color: var(--accent); 
+      display: flex; 
+      align-items: center; 
+      gap: 0.6rem; 
     }
-
+    
     .offer-badge {
-      background: linear-gradient(135deg, rgba(255, 165, 0, 0.15), rgba(255, 165, 0, 0.05));
-      color: #ffa500;
-      padding: 0.5rem 1.2rem;
-      border-radius: 20px;
-      font-size: 1.1rem;
+      background: linear-gradient(135deg, rgba(255,165,0,0.15), rgba(255,165,0,0.05));
+      color: #ffa500; 
+      padding: 0.5rem 1.2rem; 
+      border-radius: 20px; 
+      font-size: 1.1rem; 
       font-weight: 600;
       backdrop-filter: blur(5px);
     }
-
+    
+    .course-features { 
+      margin: 2rem 0; 
+      padding: 1.5rem 0; 
+      border-top: 1px solid rgba(var(--secondary), 0.1); 
+      border-bottom: 1px solid rgba(var(--secondary), 0.1); 
+    }
+    
+    .course-features li { 
+      padding: 1rem 0; 
+      font-size: 1.4rem; 
+      display: flex; 
+      align-items: center; 
+      gap: 1rem; 
+      transition: all 0.3s ease; 
+    }
+    
+    .course-features li:hover { 
+      color: var(--secondary); 
+      transform: translateX(5px); 
+    }
+    
     .btn-enroll {
-      background: linear-gradient(135deg, var(--secondary), #00c9a7);
-      border: none;
+      background: linear-gradient(135deg, var(--secondary), #00c9a7); 
+      border: none; 
       border-radius: 8px;
-      padding: 1.2rem 2rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      cursor: pointer;
+      padding: 1.2rem 2rem; 
+      font-weight: 700; 
+      letter-spacing: 0.5px; 
+      cursor: pointer; 
       overflow: hidden;
-      position: relative;
-      transition: var(--transition);
+      position: relative; 
+      transition: transform 0.3s ease; 
       animation: bounce 3s infinite 1s;
-      width: 100%;
       color: var(--primary);
       font-size: 1.6rem;
+      width: 100%;
+    }
+    
+    .btn-enroll:hover { 
+      animation: pulse 1s ease-in-out forwards; 
     }
 
-    .btn-enroll:hover {
-      animation: pulse 1s ease-in-out forwards;
-    }
-
-    /* === TEACHERS SECTION === */
+    /* === TEACHERS === */
     .teachers-section {
       padding: 10rem 5%;
       background: linear-gradient(to top, var(--dark) 20%, var(--primary) 100%);
     }
-
+    
     .teachers-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 4rem;
-      max-width: 140rem;
+      max-width: 1400px;
       margin: 4rem auto 0;
     }
-
+    
     .teacher-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(var(--secondary), 0.15);
       border-radius: 16px;
       padding: 2.5rem;
       text-align: center;
-      transition: var(--transition);
+      transition: transform 0.3s ease;
     }
-
+    
     .teacher-card:hover {
       transform: translateY(-10px);
     }
-
+    
     .teacher-photo {
-      width: 15rem;
-      height: 15rem;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       margin: 0 auto 2rem;
       border: 3px solid var(--secondary);
       object-fit: cover;
     }
-
+    
     .teacher-name {
       font-size: 2rem;
       color: var(--secondary);
@@ -773,12 +800,12 @@
       line-height: 1.6;
     }
 
-    /* === GALLERY SECTION === */
+    /* === GALLERY === */
     .gallery-section {
       padding: 10rem 5%;
       background: linear-gradient(to bottom, var(--primary) 20%, var(--dark) 100%);
     }
-
+    
     .gallery-title {
       text-align: center;
       font-size: 3.6rem;
@@ -790,43 +817,43 @@
       -webkit-text-fill-color: transparent;
       -webkit-animation: hue 15s infinite linear;
     }
-
+    
     .gallery-container {
-      max-width: 140rem;
+      max-width: 1400px;
       margin: 0 auto;
     }
-
+    
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 2rem;
     }
-
+    
     .gallery-item {
       position: relative;
       border-radius: 12px;
       overflow: hidden;
       aspect-ratio: 4/3;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
-
+    
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
     }
-
+    
     .gallery-item:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 30px rgba(var(--secondary), 0.1);
     }
-
+    
     .gallery-item:hover img {
       transform: scale(1.05);
     }
-
+    
     .gallery-caption {
       position: absolute;
       bottom: 0;
@@ -836,127 +863,135 @@
       color: var(--light);
       padding: 1.5rem;
       transform: translateY(100%);
-      transition: var(--transition);
+      transition: transform 0.3s ease;
     }
-
+    
     .gallery-item:hover .gallery-caption {
       transform: translateY(0);
     }
-
+    
     .gallery-caption h3 {
       font-size: 1.8rem;
       margin-bottom: 0.5rem;
-      color: #000000;
-    }
-
-    .gallery-caption p {
-      font-size: 1.4rem;
-      color: #000000;
-    }
-
-    /* === CONTACT SECTION === */
-    .contact-section {
-      background: var(--dark);
-    }
-
-    .contact-container {
-      max-width: 120rem;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8rem;
-      align-items: center;
-      padding: 0 5%;
-    }
-
-    .contact-info h2 {
-      font-size: 2.8rem;
-      margin: 1.5rem 0;
-    }
-
-    .contact-info p {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-    }
-
-    .contact-form {
-      background: rgba(255, 255, 255, 0.02);
-      padding: 4rem;
-      border-radius: 8px;
-      border: 1px solid rgba(var(--secondary), 0.1);
-    }
-
-    .form-group {
-      margin-bottom: 2.4rem;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      padding: 1.6rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(var(--secondary), 0.1);
-      border-radius: 4px;
       color: var(--light);
-      font-size: 1.6rem;
-      transition: var(--transition);
     }
-
-    input:focus,
-    textarea:focus {
-      border-color: var(--secondary);
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(var(--secondary), 0.2);
-      animation: pulse 0.8s ease-in-out;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      padding: 1.6rem 3.2rem;
-      background: var(--secondary);
-      color: var(--primary);
-      border: none;
-      border-radius: 4px;
-      font-size: 1.6rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(var(--secondary), 0.2);
-    }
-
-    /* === FOOTER === */
-    footer {
-      background: var(--primary);
-      text-align: center;
-      padding: 2rem;
+    
+    .gallery-caption p {
       font-size: 1.4rem;
       color: var(--accent);
     }
 
-    footer a {
+    /* === CONTACT === */
+    .contact-section { 
+      background: var(--dark); 
+      padding: 10rem 5%;
+    }
+    
+    .contact-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 8rem; 
+      align-items: center;
+    }
+    
+    .contact-info h2 { 
+      font-size: 2.8rem; 
+      margin: 1.5rem 0; 
+    }
+    
+    .contact-info p { 
+      font-size: 1.6rem; 
+      margin-bottom: 1rem; 
+      color: var(--accent);
+    }
+    
+    .contact-form {
+      background: rgba(255,255,255,0.02); 
+      padding: 4rem; 
+      border-radius: 8px; 
+      border: 1px solid rgba(var(--secondary), 0.1);
+    }
+    
+    .form-group { 
+      margin-bottom: 2.4rem; 
+    }
+    
+    input, textarea {
+      width: 100%; 
+      padding: 1.6rem; 
+      background: rgba(255,255,255,0.03); 
+      border: 1px solid rgba(var(--secondary), 0.1);
+      border-radius: 4px; 
+      color: var(--light); 
+      font-size: 1.6rem; 
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, textarea:focus {
+      border-color: var(--secondary); 
+      outline: none; 
+      box-shadow: 0 0 0 3px rgba(var(--secondary), 0.2);
+      animation: pulse 0.8s ease-in-out;
+    }
+    
+    .btn {
+      display: inline-flex; 
+      align-items: center; 
+      padding: 1.6rem 3.2rem; 
+      background: var(--secondary);
+      color: var(--primary); 
+      border: none; 
+      border-radius: 4px; 
+      font-size: 1.6rem; 
+      font-weight: 600; 
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .btn:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 5px 15px rgba(var(--secondary), 0.2); 
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: var(--dark);
+      text-align: center;
+      padding: 5rem 5%;
+      font-size: 1.6rem;
+      color: var(--accent);
+      border-top: 1px solid rgba(var(--secondary), 0.1);
+    }
+    
+    footer a { 
       background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       -webkit-animation: hue 15s infinite linear;
+      margin: 0 auto;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
     }
 
-    /* === RESPONSIVE ADJUSTMENTS === */
-    @media (max-width: 1024px) {
-      .hero-content,
-      .about-content,
-      .contact-container {
-        gap: 3rem;
+    /* === RESPONSIVE === */
+    @media (max-width: 992px) {
+      .nav-menu {
+        display: none;
       }
 
-      .hero-text h1 {
-        font-size: 4rem;
+      .hamburger {
+        display: block;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
       }
 
       .contact-container {
@@ -964,41 +999,14 @@
         gap: 4rem;
       }
 
-      .contact-form {
-        order: -1;
+      .hero-text h1 {
+        font-size: 3.6rem;
       }
     }
 
     @media (max-width: 768px) {
-      .nav-container {
-        padding: 1.5rem 5%;
-      }
-
-      .hamburger {
-        display: block;
-      }
-
-      .nav-menu {
-        position: fixed;
-        top: 8rem;
-        right: -100%;
-        width: 80%;
-        height: calc(100vh - 8rem);
-        background: rgba(var(--dark), 0.98);
-        flex-direction: column;
-        padding: 4rem 2rem;
-        transition: right 0.3s ease;
-        backdrop-filter: blur(15px);
-      }
-
-      .nav-menu.active {
-        right: 0;
-      }
-
-      .hero-content,
-      .about-content {
-        grid-template-columns: 1fr;
-        text-align: center;
+      html {
+        font-size: 55%;
       }
 
       .hero-text h1 {
@@ -1007,15 +1015,6 @@
 
       .course-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      .course-media {
-        height: 20rem;
-      }
-
-      .price-discount {
-        font-size: 2rem;
       }
 
       .teachers-grid {
@@ -1023,50 +1022,28 @@
       }
 
       .gallery-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .ai-search-box,
-      .ai-suggestions,
-      .ai-results-container {
-        width: 90%;
-      }
-
-      .ai-search-input {
-        font-size: 1.6rem;
-        padding: 1.5rem 2.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 576px) {
+      .logo-text {
+        font-size: 1.8rem;
+      }
+
+      .logos {
+        height: 40px;
+        width: 40px;
+      }
+
       .hero-text h1 {
         font-size: 2.8rem;
-      }
-
-      .section-title,
-      .gallery-title {
-        font-size: 3rem;
-      }
-
-      .course-card,
-      .teacher-card {
-        padding: 2rem;
       }
 
       .contact-form {
         padding: 2rem;
       }
-
-      .btn,
-      .cta-btn {
-        padding: 1.2rem 2.4rem;
-        font-size: 1.4rem;
-      }
-
-      .ai-suggestions {
-        grid-template-columns: 1fr;
-      }
-    }    
+    }
   </style>
 </head>
 <body>
@@ -1080,9 +1057,9 @@
   <i class='bx bx-search-alt'></i>
 </div><button class="theme-toggle" id="themeToggle">Light Theme</button>
       <div class="nav-item"><a href="#home">Home</a></div>
-      <div class="nav-item"><a href="#teachers">Teachers</a></div>
       <div class="nav-item"><a href="#about">About</a></div>
       <div class="nav-item"><a href="#courses">Courses</a></div>
+      <div class="nav-item"><a href="#teachers">Teachers</a></div>
       <div class="nav-item"><a href="#contact">Contact</a></div>
     </div>
   </nav>
@@ -1124,6 +1101,7 @@
       <dotlottie-player
         src="https://lottie.host/8a2bb172-9b6d-4dbd-94dc-bd7dc93b8cf7/Y5gNE414rD.lottie"
         background="transparent" speed="1" style="width:300px;height:300px" loop autoplay class="animate">
+        
       </dotlottie-player>
       <div class="hero-text animate">
         <h1>Transform Your Career with Advance IT</h1>
@@ -1299,6 +1277,7 @@
       <h3 class="teacher-name">Iqbal Mahfuj</h3>
       <p class="teacher-qualifications">
         HONOURSE 1st year <br>
+        Political Science Student <br>
         Science teahcer<br>
 
       </p>
@@ -1412,19 +1391,33 @@
       <h2>Get in Touch</h2>
       <p>Have questions? Feel free to reach out!</p>
     </div>
+<form class="contact-form" onsubmit="sendEmail(event)">
+  <div class="form-group">
+    <input type="text" id="name" placeholder="Your Name" required />
+  </div>
+  <div class="form-group">
+    <input type="email" id="email" placeholder="Your Email" required />
+  </div>
+  <div class="form-group">
+    <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+  </div>
+  <button type="submit" class="btn">Send Email</button>
+</form>
+
+<script>
+  function sendEmail(event) {
+    event.preventDefault();
     
-    <form class="contact-form" onsubmit="openEmailApp(event)">
-      <div class="form-group">
-        <input type="text" id="name" placeholder="Your Name" required />
-      </div>
-      <div class="form-group">
-        <input type="email" id="email" placeholder="Your Email" required />
-      </div>
-      <div class="form-group">
-        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
-      </div>
-      <button type="submit" class="btn">Send Email</button>
-    </form>
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    
+    const subject = "Message from website contact form";
+    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+    
+    window.location.href = `mailto:your-email@example.com?subject=${subject}&body=${body}`;
+  }
+</script>
   </div>
   <script>
   function openEmailApp(event) {
@@ -1450,7 +1443,7 @@
   </section>
   <footer>
   <style="background:var(--primary);text-align:center;padding:2rem;font-size:1.4rem;color:var(--accent);">
-    &copy; 2025 Advance IT. All Rights Reserved. Developed by <a href="https://nirob120.netlify.app/">NIROB</a>
+    &copy; 2025 Advance IT. All Rights Reserved. Developed by <a href="https://nirob120.netlify.app/">NIROB & ALIF</a>
 </a>
   </footer>
   <script>
@@ -1490,7 +1483,7 @@
     document.querySelectorAll('.animate').forEach(el => observer.observe(el));
   </script>
   <script>
-// Enhanced AI Search System
+// AI Search System
 const aiSearchTrigger = document.getElementById('aiSearchTrigger');
 const aiSearchContainer = document.getElementById('aiSearchContainer');
 const aiSearchClose = document.getElementById('aiSearchClose');
@@ -1498,488 +1491,133 @@ const aiSearchInput = document.getElementById('aiSearchInput');
 const aiSuggestions = document.getElementById('aiSuggestions');
 const aiResultsContainer = document.getElementById('aiResultsContainer');
 
-// Enhanced Content Index with more metadata
+// Content Index
 const contentIndex = [
   {
     id: 'web-dev',
     type: 'Course',
     title: 'Web Development Course',
-    content: 'Our comprehensive web development course covers modern technologies including JavaScript, React JS, Node JS, Express JS, MongoDB, Vercel Hosting, and Firebase. Perfect for beginners to advanced learners.',
-    details: {
-      duration: '6 months',
-      originalPrice: '৳10,500',
-      discountPrice: '৳8,500',
-      features: ['Project-based learning', 'Industry-relevant curriculum', 'Portfolio development'],
-      requirements: 'Basic computer knowledge'
-    },
-    keywords: ['web development', 'javascript', 'react', 'nodejs', 'mongodb', 'full stack', 'frontend', 'backend'],
-    synonyms: ['website development', 'web programming', 'fullstack development'],
-    link: '#courses',
-    popularity: 9 // 1-10 scale
+    content: 'Comprehensive web development course covering JavaScript, React, Node.js, MongoDB, and more.',
+    keywords: ['web', 'development', 'javascript', 'react'],
+    link: '#courses'
   },
   {
     id: 'cpa-marketing',
     type: 'Course',
-    title: 'CPA Marketing Mastery',
-    content: 'Learn affiliate marketing strategies with our CPA Marketing course. Includes traffic generation methods, landing page optimization, and campaign tracking. 100% income guarantee for qualified students.',
-    details: {
-      duration: '2 months',
-      originalPrice: '৳7,500',
-      discountPrice: '৳5,500',
-      features: ['Real campaign examples', 'Income verification', 'Ongoing support'],
-      requirements: 'Internet access'
-    },
-    keywords: ['cpa marketing', 'affiliate marketing', 'make money online', 'digital marketing'],
-    synonyms: ['cost per action', 'performance marketing'],
-    link: '#courses',
-    popularity: 7
+    title: 'CPA Marketing',
+    content: 'Learn affiliate marketing strategies with our CPA Marketing course.',
+    keywords: ['cpa', 'marketing', 'affiliate'],
+    link: '#courses'
   },
-  {
-    id: 'teachers',
-    type: 'Faculty',
-    title: 'Our Expert Instructors',
-    content: 'Learn from industry professionals and certified trainers. Our faculty includes computer engineers, ICT specialists, and English language experts with years of teaching experience.',
-    details: {
-      teachers: [
-        {
-          name: 'MD. Samsuzzman Rubel',
-          qualifications: 'Computer Hardware & Software Engineer, Graphic Designer'
-        },
-        {
-          name: 'Al Aminur Rashid',
-          qualifications: 'ICT Master Trainer, Senior Teacher'
-        }
-      ]
-    },
-    keywords: ['teachers', 'instructors', 'faculty', 'trainers'],
-    synonyms: ['educators', 'professors'],
-    link: '#teachers',
-    popularity: 6
-  },
-  {
-    id: 'contact',
-    type: 'Support',
-    title: 'Contact Information',
-    content: 'Reach out for course inquiries, registration, or support. We typically respond within 24 hours during business days.',
-    details: {
-      email: 'advanceitds@gmail.com',
-      phones: ['+8801744525287', '+8801766417142'],
-      hours: '9:00 AM - 5:00 PM (Sat-Thu)'
-    },
-    keywords: ['contact', 'email', 'phone', 'support', 'help'],
-    synonyms: ['reach us', 'get in touch'],
-    link: '#contact',
-    popularity: 5
-  },
-  {
-    id: 'about',
-    type: 'Information',
-    title: 'About Advance IT',
-    content: 'We provide industry-leading technical education with practical learning approaches. Established in 2015, we have trained over 1,000 students in various IT disciplines.',
-    details: {
-      features: ['Expert-led instruction', 'Project-based learning', 'Career support'],
-      benefits: ['Flexible scheduling', 'Hands-on practice', 'Job placement assistance']
-    },
-    keywords: ['about us', 'academy', 'institute', 'education'],
-    synonyms: ['who we are', 'our mission'],
-    link: '#about',
-    popularity: 4
-  }
+  // Add more content items as needed
 ];
 
-// Initialize search
+// Search Triggers
 aiSearchTrigger.addEventListener('click', () => {
   aiSearchContainer.classList.add('active');
   aiSearchInput.focus();
-  trackUserAction('search_opened');
 });
 
 aiSearchClose.addEventListener('click', () => {
   aiSearchContainer.classList.remove('active');
   aiSearchInput.value = '';
   showDefaultResults();
-  trackUserAction('search_closed');
 });
 
-// Enhanced suggestion chips with dynamic generation
-function updateSuggestions() {
-  // Clear existing suggestions
-  aiSuggestions.innerHTML = '';
-  
-  // Generate suggestions based on popularity and recent searches
-  const popularSuggestions = contentIndex
-    .sort((a, b) => b.popularity - a.popularity)
-    .slice(0, 6);
-  
-  popularSuggestions.forEach(item => {
-    const chip = document.createElement('div');
-    chip.className = 'ai-suggestion-chip';
-    chip.textContent = item.title;
-    chip.addEventListener('click', () => {
-      aiSearchInput.value = item.title;
-      performAISearch(item.title);
-      trackUserAction('suggestion_used', { suggestion: item.title });
-    });
-    aiSuggestions.appendChild(chip);
-  });
-}
-
-// Search with debounce and analytics
+// Search Input Handling
 let searchDebounce;
-let lastSearchTerm = '';
-let searchSessionId = generateSessionId();
-
 aiSearchInput.addEventListener('input', (e) => {
   clearTimeout(searchDebounce);
-  const currentTerm = e.target.value.trim();
+  const query = e.target.value.trim();
   
-  if (currentTerm === '') {
+  if (!query) {
     showDefaultResults();
     return;
   }
   
-  // Show typing indicator with animation
-  showTypingIndicator();
-  
   searchDebounce = setTimeout(() => {
-    if (currentTerm !== lastSearchTerm) {
-      trackUserAction('search_performed', { term: currentTerm });
-      lastSearchTerm = currentTerm;
-    }
-    performAISearch(currentTerm);
+    performSearch(query);
   }, 300);
 });
 
-// Enhanced search function with NLP features
-function performAISearch(query) {
-  const searchTerm = query.toLowerCase().trim();
+// Search Functionality
+function performSearch(query) {
+  const results = contentIndex.filter(item => {
+    const searchString = `${item.title} ${item.content} ${item.keywords.join(' ')}`.toLowerCase();
+    return searchString.includes(query.toLowerCase());
+  });
   
-  if (searchTerm === '') {
-    showDefaultResults();
-    return;
-  }
-  
-  // Process query for better matching
-  const processedQuery = processQuery(searchTerm);
-  
-  // Score and rank results
-  const scoredResults = contentIndex.map(item => {
-    return {
-      ...item,
-      score: calculateRelevanceScore(item, processedQuery)
-    };
-  }).filter(item => item.score > 0)
-    .sort((a, b) => b.score - a.score);
-  
-  displayResults(scoredResults, searchTerm);
+  displayResults(results, query);
 }
 
-// Advanced query processing
-function processQuery(query) {
-  // Common question patterns
-  const questionPatterns = {
-    'price|cost|fee': 'searching for pricing information',
-    'duration|length|time': 'searching for course duration',
-    'start|begin|enroll': 'searching for enrollment info',
-    'teacher|instructor|trainer': 'searching for faculty info',
-    'contact|email|phone': 'searching for contact info'
-  };
+// Display Results
+function displayResults(results, query) {
+  aiResultsContainer.innerHTML = '';
   
-  // Extract intent
-  let intent = 'general_search';
-  for (const [pattern, detectedIntent] of Object.entries(questionPatterns)) {
-    if (new RegExp(pattern).test(query)) {
-      intent = detectedIntent;
-      break;
-    }
-  }
-  
-  // Extract entities
-  const entities = [];
-  contentIndex.forEach(item => {
-    if (new RegExp(item.type.toLowerCase()).test(query)) {
-      entities.push(item.type.toLowerCase());
-    }
-    if (item.keywords.some(keyword => query.includes(keyword))) {
-      entities.push(...item.keywords.filter(keyword => query.includes(keyword)));
-    }
-  });
-  
-  return {
-    original: query,
-    tokens: query.split(/\s+/),
-    intent,
-    entities: [...new Set(entities)], // Remove duplicates
-    isQuestion: /\?$/.test(query)
-  };
-}
-
-// Enhanced relevance scoring
-function calculateRelevanceScore(item, processedQuery) {
-  let score = 0;
-  
-  // 1. Exact matches
-  if (item.title.toLowerCase().includes(processedQuery.original)) {
-    score += 50;
-  }
-  
-  // 2. Partial matches in title
-  processedQuery.tokens.forEach(token => {
-    if (item.title.toLowerCase().includes(token)) {
-      score += 20;
-    }
-  });
-  
-  // 3. Content matches
-  if (item.content.toLowerCase().includes(processedQuery.original)) {
-    score += 30;
-  }
-  
-  processedQuery.tokens.forEach(token => {
-    if (item.content.toLowerCase().includes(token)) {
-      score += 10;
-    }
-  });
-  
-  // 4. Keyword matches
-  processedQuery.tokens.forEach(token => {
-    if (item.keywords.includes(token)) {
-      score += 15;
-    }
-    if (item.synonyms.includes(token)) {
-      score += 10;
-    }
-  });
-  
-  // 5. Intent matching
-  if (processedQuery.intent.includes('pricing') && item.details?.discountPrice) {
-    score += 25;
-  }
-  if (processedQuery.intent.includes('duration') && item.details?.duration) {
-    score += 25;
-  }
-  
-  // 6. Entity matching
-  if (processedQuery.entities.includes(item.type.toLowerCase())) {
-    score += 30;
-  }
-  
-  // 7. Popularity boost
-  score += item.popularity;
-  
-  return score;
-}
-
-// Enhanced results display with rich snippets
-function displayResults(results, searchTerm) {
   if (results.length === 0) {
     aiResultsContainer.innerHTML = `
       <div class="ai-no-results">
-        <p>No results found for "${escapeHtml(searchTerm)}"</p>
-        <p>Try these suggestions:</p>
-        <ul style="text-align: left; margin-top: 1rem;">
-          <li>Check your spelling</li>
-          <li>Use more general terms</li>
-          <li>Ask a question like "What's in the web development course?"</li>
-        </ul>
+        <p>No results found for "${query}"</p>
       </div>
     `;
     return;
   }
   
-  aiResultsContainer.innerHTML = '';
-  
-  results.slice(0, 5).forEach(result => {
-    const resultCard = document.createElement('div');
-    resultCard.className = 'ai-result-card';
-    
-    // Generate rich content based on result type
-    let richContent = '';
-    
-    if (result.type === 'Course') {
-      richContent = `
-        <div class="ai-result-meta">
-          <span><i class='bx bx-time'></i> ${result.details.duration}</span>
-          <span><i class='bx bx-dollar-circle'></i> ${result.details.discountPrice} <small>(was ${result.details.originalPrice})</small></span>
-        </div>
-        <div class="ai-result-features">
-          ${result.details.features.map(f => <span><i class='bx bx-check'></i> ${f}</span>).join('')}
-        </div>
-      `;
-    } else if (result.type === 'Faculty') {
-      richContent = `
-        <div class="ai-result-teachers">
-          ${result.details.teachers.map(t => `
-            <div class="ai-teacher">
-              <strong>${t.name}</strong>: ${t.qualifications}
-            </div>
-          `).join('')}
-        </div>
-      `;
-    }
-    
-    resultCard.innerHTML = `
+  results.forEach(result => {
+    const resultElement = document.createElement('div');
+    resultElement.className = 'ai-result-card';
+    resultElement.innerHTML = `
       <div class="ai-result-title">
-        ${highlightMatches(result.title, searchTerm)}
+        ${result.title}
         <span class="ai-result-type">${result.type}</span>
       </div>
       <div class="ai-result-content">
-        ${highlightMatches(truncateContent(result.content), searchTerm)}
-      </div>
-      ${richContent}
-      <div class="ai-result-footer">
-        <span class="ai-relevance">Relevance: ${Math.round(result.score)}%</span>
-        <button class="ai-view-more">View details <i class='bx bx-chevron-right'></i></button>
+        ${highlightMatches(result.content, query)}
       </div>
     `;
     
-    resultCard.addEventListener('click', () => {
+    resultElement.addEventListener('click', () => {
       window.location.href = result.link;
       aiSearchContainer.classList.remove('active');
-      trackUserAction('result_clicked', { 
-        resultId: result.id,
-        position: results.indexOf(result) + 1
-      });
     });
     
-    aiResultsContainer.appendChild(resultCard);
+    aiResultsContainer.appendChild(resultElement);
   });
 }
 
-// Helper functions
-function showTypingIndicator() {
+// Helper Functions
+function highlightMatches(text, term) {
+  if (!term) return text;
+  const regex = new RegExp(`(${term})`, 'gi');
+  return text.replace(regex, '<span class="highlight">$1</span>');
+}
+
+function showDefaultResults() {
   aiResultsContainer.innerHTML = `
-    <div class="ai-typing-indicator">
-      <div class="ai-typing">Understanding your query</div>
-      <div class="ai-typing-dots">
-        <div class="ai-typing-dot"></div>
-        <div class="ai-typing-dot"></div>
-        <div class="ai-typing-dot"></div>
-      </div>
-      <div class="ai-typing-hint">Analyzing ${lastSearchTerm.length > 10 ? 'complex' : ''} request...</div>
+    <div class="ai-no-results">
+      <p>Type to search courses, teachers, or information</p>
     </div>
   `;
 }
 
-function truncateContent(text, maxLength = 200) {
-  return text.length > maxLength ? 
-    text.substring(0, maxLength) + '...' : 
-    text;
-}
-
-function highlightMatches(text, term) {
-  if (!term) return escapeHtml(text);
-  
-  // Escape HTML first to prevent injection
-  const safeText = escapeHtml(text);
-  
-  // Highlight all variations of the term
-  const terms = term.split(/\s+/);
-  let highlighted = safeText;
-  
-  terms.forEach(t => {
-    if (t.length > 2) { // Only highlight terms longer than 2 chars
-      const regex = new RegExp((${escapeRegExp(t)}), 'gi');
-      highlighted = highlighted.replace(regex, '<span class="highlight">$1</span>');
-    }
+// Suggestions
+document.querySelectorAll('.ai-suggestion-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    aiSearchInput.value = chip.textContent;
+    performSearch(chip.textContent);
   });
-  
-  return highlighted;
-}
+});
 
-function escapeHtml(unsafe) {
-  return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function generateSessionId() {
-  return 'ssn_' + Math.random().toString(36).substr(2, 9);
-}
-
-// Analytics tracking
-function trackUserAction(action, data = {}) {
-  const eventData = {
-    action,
-    sessionId: searchSessionId,
-    timestamp: new Date().toISOString(),
-    ...data
-  };
-  
-  // In a real app, you would send this to your analytics service
-  console.log('Tracking event:', eventData);
-  
-  // Example: Store in localStorage for session tracking
-  const searchHistory = JSON.parse(localStorage.getItem('searchHistory') || '[]');
-  searchHistory.push(eventData);
-  localStorage.setItem('searchHistory', JSON.stringify(searchHistory.slice(-50))); // Keep last 50 events
-}
-
-// Initialize
-updateSuggestions();
-showDefaultResults();
-
-// Keyboard shortcuts with more options
+// Keyboard Shortcuts
 document.addEventListener('keydown', (e) => {
-  // Ctrl+K or Cmd+K to open search
   if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
     e.preventDefault();
     aiSearchContainer.classList.add('active');
     aiSearchInput.focus();
   }
   
-  // Esc to close
   if (e.key === 'Escape') {
     aiSearchContainer.classList.remove('active');
-  }
-  
-  // Up/Down arrows to navigate results when search is open
-  if (aiSearchContainer.classList.contains('active') && 
-      (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
-    e.preventDefault();
-    const results = aiResultsContainer.querySelectorAll('.ai-result-card');
-    if (results.length === 0) return;
-    
-    const currentActive = document.activeElement;
-    let nextIndex = 0;
-    
-    if (currentActive.classList.contains('ai-result-card')) {
-      const currentIndex = Array.from(results).indexOf(currentActive);
-      nextIndex = e.key === 'ArrowDown' ? 
-        Math.min(currentIndex + 1, results.length - 1) : 
-        Math.max(currentIndex - 1, 0);
-    }
-    
-    results[nextIndex].focus();
-  }
-  
-  // Enter to open selected result
-  if (e.key === 'Enter' && 
-      aiSearchContainer.classList.contains('active') &&
-      document.activeElement.classList.contains('ai-result-card')) {
-    document.activeElement.click();
-  }
-});
-
-// Add focus styles for keyboard navigation
-document.addEventListener('focusin', (e) => {
-  if (e.target.classList.contains('ai-result-card')) {
-    e.target.style.transform = 'translateX(5px)';
-    e.target.style.boxShadow = '0 5px 15px rgba(var(--secondary), 0.2)';
-  }
-});
-
-document.addEventListener('focusout', (e) => {
-  if (e.target.classList.contains('ai-result-card')) {
-    e.target.style.transform = '';
-    e.target.style.boxShadow = '';
   }
 });
 </script>
