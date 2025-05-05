@@ -85,7 +85,7 @@
       font-size: 2.2rem;
       font-weight: 700;
       color: var(--secondary);
-      background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
+      background-image: -webkit-linear-gradient(125deg, #6ACDFF, #6A87FF, #906AFF);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       -webkit-animation: hue 15s infinite linear;
@@ -103,32 +103,448 @@
       gap: 1.5rem;
     }
 
-    .ai-search-trigger {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(var(--secondary), 0.1);
-      color: var(--secondary);
-      font-size: 1.8rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      opacity: 0;
-      transform: translateX(-20px);
-      animation: slideInSearch 0.5s ease-out forwards 0.9s;
-    }
+  
+/* Enhanced Search Styles */
+.ai-search-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(var(--dark), 0.98);
+  z-index: 9999;
+  display: none;
+  backdrop-filter: blur(15px);
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh;
+  overflow: hidden;
+}
 
-    @keyframes slideInSearch {
-      from { opacity: 0; transform: translateX(-20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
+.ai-search-container.active {
+  display: flex;
+  animation: fadeIn 0.3s ease-out;
+}
 
-    .ai-search-trigger:hover {
-      background: rgba(var(--secondary), 0.2);
-      transform: scale(1.1);
-    }
+.ai-search-box {
+  width: 90%;
+  max-width: 800px;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.ai-search-input {
+  width: 100%;
+  padding: 1.8rem 3rem;
+  font-size: 2rem;
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(var(--secondary), 0.3);
+  border-radius: 50px;
+  color: var(--light);
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  font-weight: 500;
+  padding-right: 6rem;
+}
+
+.ai-search-input:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 15px 40px rgba(var(--secondary), 0.2);
+  transform: translateY(-2px);
+}
+
+.ai-search-icon {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary);
+  font-size: 2.5rem;
+  pointer-events: none;
+}
+
+.ai-search-close {
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  font-size: 2.5rem;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255,255,255,0.1);
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.ai-search-close:hover {
+  color: var(--secondary);
+  transform: rotate(90deg) scale(1.1);
+  background: rgba(var(--secondary), 0.1);
+}
+
+.ai-suggestions {
+  width: 90%;
+  max-width: 800px;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.ai-suggestion-chip {
+  background: rgba(var(--secondary), 0.1);
+  color: var(--secondary);
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(var(--secondary), 0.3);
+  font-weight: 500;
+}
+
+.ai-suggestion-chip:hover, .ai-suggestion-chip.active {
+  background: rgba(var(--secondary), 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(var(--secondary), 0.2);
+}
+
+.ai-results-container {
+  width: 90%;
+  max-width: 1000px;
+  margin-top: 2rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) rgba(var(--secondary), 0.1);
+}
+
+.ai-results-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ai-results-container::-webkit-scrollbar-track {
+  background: rgba(var(--secondary), 0.1);
+  border-radius: 10px;
+}
+
+.ai-results-container::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 10px;
+}
+
+.ai-result-card {
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid var(--secondary);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-result-card:hover {
+  transform: translateX(10px);
+  background: rgba(var(--secondary), 0.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.ai-result-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(var(--secondary), 0.03) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.ai-result-card:hover::before {
+  transform: translateX(100%);
+}
+
+.ai-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.ai-result-title {
+  font-size: 1.8rem;
+  color: var(--secondary);
+  font-weight: 600;
+  flex: 1;
+}
+
+.ai-result-content {
+  font-size: 1.4rem;
+  color: var(--accent);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.ai-result-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  font-size: 1.3rem;
+}
+
+.ai-rating {
+  color: #ffc107;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.ai-rating span {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.ai-price {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ai-original-price {
+  text-decoration: line-through;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.ai-current-price {
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+.ai-teacher, .ai-duration {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+}
+
+.ai-teacher i, .ai-duration i {
+  color: var(--secondary);
+}
+
+.ai-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.ai-tag {
+  background: rgba(var(--secondary), 0.1);
+  color: var(--secondary);
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+}
+
+.ai-no-results {
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--accent);
+  padding: 3rem;
+}
+
+.ai-no-results .ai-suggestion {
+  font-size: 1.4rem;
+  color: var(--secondary);
+  margin-top: 1rem;
+  display: block;
+}
+
+.ai-search-loader {
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.ai-typing {
+  display: inline-flex;
+  align-items: center;
+  color: var(--secondary);
+  font-size: 1.4rem;
+  background: rgba(var(--secondary), 0.1);
+  padding: 1rem 2rem;
+  border-radius: 30px;
+}
+
+.ai-typing-dots {
+  display: flex;
+  margin-left: 0.8rem;
+}
+
+.ai-typing-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--secondary);
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.ai-typing-dot:nth-child(1) { animation-delay: 0s; }
+.ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+.ai-default-results {
+  width: 100%;
+}
+
+.ai-results-group-header {
+  font-size: 1.6rem;
+  color: var(--secondary);
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(var(--secondary), 0.2);
+}
+
+.ai-popular-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.ai-popular-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(var(--secondary), 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ai-popular-card:hover {
+  transform: translateY(-5px);
+  background: rgba(var(--secondary), 0.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.ai-popular-title {
+  font-size: 1.6rem;
+  color: var(--light);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.ai-popular-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.ai-search-tips {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(var(--secondary), 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 3rem;
+}
+
+.ai-search-tips h4 {
+  font-size: 1.6rem;
+  color: var(--secondary);
+  margin-bottom: 1.5rem;
+}
+
+.ai-search-tips ul {
+  list-style: none;
+  font-size: 1.4rem;
+  color: var(--accent);
+  line-height: 1.8;
+}
+
+.ai-search-tips li {
+  margin-bottom: 1rem;
+}
+
+.ai-tip {
+  color: var(--secondary);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+  transition: all 0.3s ease;
+}
+
+.ai-tip:hover {
+  color: var(--light);
+}
+
+.highlight {
+  background: rgba(var(--secondary), 0.3);
+  padding: 0 0.2rem;
+  border-radius: 0.2rem;
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ai-search-box {
+    width: 95%;
+  }
+  
+  .ai-suggestions {
+    width: 95%;
+    justify-content: flex-start;
+  }
+  
+  .ai-results-container {
+    width: 95%;
+  }
+  
+  .ai-search-input {
+    font-size: 1.8rem;
+    padding: 1.5rem 2.5rem;
+    padding-right: 5rem;
+  }
+  
+  .ai-search-icon {
+    font-size: 2rem;
+    right: 1.5rem;
+  }
+  
+  .ai-search-close {
+    top: 2rem;
+    right: 2rem;
+    font-size: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-result-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .ai-popular-items {
+    grid-template-columns: 1fr;
+  }
+}
 
     .theme-toggle {
       background: none;
@@ -981,6 +1397,7 @@
         display: none;
       }
 
+
       .hamburger {
         display: block;
       }
@@ -1027,7 +1444,7 @@
     }
 
     @media (max-width: 576px) {
-      .logo-text {
+      .logo {
         font-size: 1.8rem;
       }
 
@@ -1044,7 +1461,1041 @@
         padding: 2rem;
       }
     }
-  </style>
+/* === THEME VARIABLES === */
+:root {
+  --primary: #0a192f;
+  --secondary: #64ffda;
+  --accent: #8892b0;
+  --light: #ccd6f6;
+  --dark: #020c1b;
+}
+/* Light theme overrides */
+[data-theme="light"] {
+  --primary: #f0f0f5;
+  --secondary: #004aad;
+  --accent: #555;
+  --light: #222;
+  --dark: #ffffff;
+}
+
+/* === GLOBAL RESET & FONTS === */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+html { scroll-behavior:smooth; font-size:62.5%; }
+body { background: var(--primary); color: var(--light); line-height:1.6; overflow-x:hidden; }
+
+/* === UPDATED NAVIGATION === */
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(var(--dark), 0.95);
+  backdrop-filter: blur(15px);
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(var(--secondary), 0.1);
+  transform: translateY(-100%);
+  animation: slideDownNav 0.6s ease-out forwards 0.3s;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideDownNav {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+}
+
+.logos {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  animation: fadeInLogo 0.8s ease-out forwards 0.5s;
+}
+
+@keyframes fadeInLogo {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.logo {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--secondary);
+  background-image: -webkit-linear-gradient(125deg, #6ACDFF, #6A87FF, #906AFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 15s infinite linear;
+  animation: popInLogo 0.8s ease-out forwards 0.7s;
+}
+
+@keyframes popInLogo {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.ai-search-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(var(--secondary), 0.1);
+  color: var(--secondary);
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInSearch 0.5s ease-out forwards 0.9s;
+}
+
+@keyframes slideInSearch {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.ai-search-trigger:hover {
+  background: rgba(var(--secondary), 0.2);
+  transform: scale(1.1);
+}
+
+.theme-toggle {
+  background: none;
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideInTheme 0.5s ease-out forwards 1.1s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@keyframes slideInTheme {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-toggle:hover {
+  background: rgba(var(--secondary), 0.2);
+}
+
+.theme-toggle i {
+  font-size: 1.6rem;
+}
+
+.hamburger {
+  width: 3.5rem;
+  height: 3.5rem;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+  display: none;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: slideInHamburger 0.5s ease-out forwards 0.9s;
+  z-index: 1001;
+}
+
+@keyframes slideInHamburger {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0.3rem;
+  background: var(--secondary);
+  border-radius: 0.2rem;
+  transition: all 0.5s ease;
+}
+
+.hamburger span:nth-child(1) {
+  top: 0.8rem;
+}
+
+.hamburger span:nth-child(2) {
+  top: 1.6rem;
+  opacity: 1;
+}
+
+.hamburger span:nth-child(3) {
+  top: 2.4rem;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(0.8rem) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-0.8rem) rotate(-45deg);
+}
+
+.nav-menu {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.nav-item {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.nav-item a {
+  color: var(--light);
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 0.8rem 0;
+  display: block;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-item a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--secondary);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-item a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-item a:hover {
+  color: var(--secondary);
+}
+
+.nav-menu.active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(var(--dark), 0.98);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  backdrop-filter: blur(15px);
+  z-index: 1000;
+  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.nav-menu.active .nav-item {
+  animation: slideInNavItems 0.5s ease forwards;
+}
+
+@keyframes slideInNavItems {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-menu.active .nav-item:nth-child(1) { animation-delay: 0.4s; }
+.nav-menu.active .nav-item:nth-child(2) { animation-delay: 0.5s; }
+.nav-menu.active .nav-item:nth-child(3) { animation-delay: 0.6s; }
+.nav-menu.active .nav-item:nth-child(4) { animation-delay: 0.7s; }
+.nav-menu.active .nav-item:nth-child(5) { animation-delay: 0.8s; }
+
+/* AI Search Styles */
+.ai-search-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(var(--dark), 0.95);
+  z-index: 9999;
+  display: none;
+  backdrop-filter: blur(15px);
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh;
+}
+
+.ai-search-container.active {
+  display: flex;
+  animation: fadeIn 0.4s ease;
+}
+
+.ai-search-box {
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+}
+
+.ai-search-input {
+  width: 100%;
+  padding: 2rem 3rem;
+  font-size: 2rem;
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(var(--secondary), 0.3);
+  border-radius: 50px;
+  color: var(--light);
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.ai-search-input:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 15px 40px rgba(var(--secondary), 0.2);
+}
+
+.ai-search-icon {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  font-size: 2.5rem;
+}
+
+.ai-suggestions {
+  width: 80%;
+  max-width: 800px;
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.ai-suggestion-chip {
+  background: rgba(var(--secondary), 0.1);
+  color: var(--secondary);
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  border: 1px solid rgba(var(--secondary), 0.3);
+}
+
+.ai-suggestion-chip:hover {
+  background: rgba(var(--secondary), 0.3);
+  transform: translateY(-3px);
+}
+
+.ai-results-container {
+  width: 80%;
+  max-width: 1000px;
+  margin-top: 3rem;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.ai-result-card {
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid var(--secondary);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.ai-result-card:hover {
+  transform: translateX(10px);
+  background: rgba(var(--secondary), 0.05);
+}
+
+.ai-result-title {
+  font-size: 1.8rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.ai-result-content {
+  font-size: 1.4rem;
+  color: var(--accent);
+  line-height: 1.6;
+}
+
+.ai-result-type {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  background: rgba(var(--secondary), 0.1);
+  color: var(--secondary);
+  border-radius: 4px;
+  font-size: 1.2rem;
+  margin-left: 1rem;
+}
+
+.ai-search-close {
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  font-size: 2.5rem;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ai-search-close:hover {
+  color: var(--secondary);
+  transform: rotate(90deg);
+}
+
+.ai-no-results {
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--accent);
+  padding: 3rem;
+}
+
+.ai-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+/* Typing indicator */
+.ai-typing {
+  display: flex;
+  align-items: center;
+  color: var(--accent);
+  font-size: 1.4rem;
+  margin-top: 1rem;
+}
+
+.ai-typing-dots {
+  display: flex;
+  margin-left: 0.8rem;
+}
+
+.ai-typing-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--secondary);
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.ai-typing-dot:nth-child(1) { animation-delay: 0s; }
+.ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* === KEYFRAMES === */
+@keyframes fadeIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+@keyframes pulse { 0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);} }
+@keyframes bounce { 0%,20%,50%,80%,100%{transform:translateY(0);} 40%{transform:translateY(-10px);} 60%{transform:translateY(-5px);} }
+@keyframes hue { from { -webkit-filter: hue-rotate(0deg); } to { -webkit-filter: hue-rotate(-360deg); } }
+
+.animate { opacity:0; }
+.animate.visible { animation: fadeIn 0.8s ease forwards; }
+
+/* === HERO === */
+.hero-section { 
+  background: linear-gradient(45deg, var(--dark), var(--primary)); 
+  padding-top: 15rem;
+  padding-bottom: 10rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+  
+.hero-content {
+  max-width: 1200px; 
+  margin: 0 auto; 
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 4rem; 
+  align-items: center;
+  padding: 0 5%;
+}
+  
+.hero-text h1 { 
+  font-size: 4.8rem; 
+  color: var(--secondary); 
+  line-height: 1.2; 
+  margin-bottom: 2rem;
+  background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 15s infinite linear;
+}
+  
+.hero-text p { 
+  font-size: 1.8rem; 
+  color: var(--accent); 
+  margin-bottom: 3rem; 
+}
+  
+.cta-btn {
+  display: inline-block; 
+  padding: 1.6rem 3.2rem; 
+  background: var(--secondary);
+  color: var(--primary); 
+  border-radius: 4px; 
+  font-size: 1.6rem; 
+  font-weight: 600;
+  cursor: pointer; 
+  animation: bounce 2s infinite;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+}
+  
+.cta-btn:hover { 
+  animation: pulse 1s ease-in-out forwards; 
+}
+
+/* === ABOUT === */
+.about-section { 
+  background: var(--dark); 
+  padding: 10rem 5%;
+}
+  
+.about-content {
+  max-width: 1200px; 
+  margin: 0 auto; 
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 4rem; 
+  align-items: center;
+}
+  
+.about-text h2 { 
+  font-size: 3.6rem; 
+  margin-bottom: 2rem;
+  background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 15s infinite linear;
+}
+  
+.about-text p { 
+  font-size: 1.6rem; 
+  color: var(--accent); 
+  margin-bottom: 2rem; 
+}
+  
+.course-features li {
+  padding: 1rem 0;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--light);
+}
+
+/* === COURSES === */
+.nn { 
+  text-align: center; 
+  font-size: 3.6rem; 
+  margin: 4rem auto 2rem; 
+  animation: fadeIn 1s ease forwards;
+  background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 15s infinite linear;
+}
+  
+.courses-section {
+  padding: 10rem 5%; 
+  background: linear-gradient(to bottom, var(--dark) 20%, var(--primary) 100%);
+}
+  
+.course-grid {
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 4rem; 
+  max-width: 1400px; 
+  margin: 4rem auto 0;
+}
+  
+.course-card {
+  background: rgba(255,255,255,0.03); 
+  border: 1px solid rgba(var(--secondary), 0.15);
+  border-radius: 16px; 
+  padding: 2.5rem; 
+  position: relative; 
+  overflow: hidden;
+  transform: perspective(600px) rotateX(0deg);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+  
+.course-card:hover {
+  transform: perspective(600px) rotateX(5deg) translateY(-10px);
+  box-shadow: 0 15px 40px rgba(var(--secondary), 0.1);
+}
+  
+.course-card::before {
+  content: ''; 
+  position: absolute; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  background: linear-gradient(45deg, transparent 20%, rgba(var(--secondary), 0.08) 50%, transparent 80%);
+  transform: rotate(45deg); 
+  transition: all 0.6s ease;
+}
+  
+.course-card:hover::before { 
+  top: 150%; 
+  left: 150%; 
+}
+
+.course-media { 
+  height: 220px; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  margin-bottom: 2.5rem; 
+  background: rgba(0,0,0,0.3); 
+}
+  
+.course-title { 
+  font-size: 2.2rem; 
+  color: var(--light); 
+  margin-bottom: 1.8rem; 
+  position: relative; 
+  padding-bottom: 1rem; 
+}
+  
+.course-title::after { 
+  content: ''; 
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  width: 40px; 
+  height: 2px; 
+  background: var(--secondary); 
+}
+  
+.price-container { 
+  display: flex; 
+  align-items: baseline; 
+  gap: 1.5rem; 
+  margin-bottom: 1.2rem; 
+}
+  
+.price-original { 
+  font-size: 1.6rem; 
+  color: var(--accent); 
+  text-decoration: line-through; 
+}
+  
+.price-discount a { 
+  font-size: 2.4rem; 
+  color: var(--secondary); 
+  font-weight: 700; 
+}
+  
+.price-discount { 
+  font-size: 2.4rem; 
+  color: var(--secondary); 
+  font-weight: 700; 
+}
+  
+.course-meta { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 2rem; 
+}
+  
+.duration { 
+  font-size: 1.3rem; 
+  color: var(--accent); 
+  display: flex; 
+  align-items: center; 
+  gap: 0.6rem; 
+}
+  
+.offer-badge {
+  background: linear-gradient(135deg, rgba(255,165,0,0.15), rgba(255,165,0,0.05));
+  color: #ffa500; 
+  padding: 0.5rem 1.2rem; 
+  border-radius: 20px; 
+  font-size: 1.1rem; 
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+}
+  
+.course-features { 
+  margin: 2rem 0; 
+  padding: 1.5rem 0; 
+  border-top: 1px solid rgba(var(--secondary), 0.1); 
+  border-bottom: 1px solid rgba(var(--secondary), 0.1); 
+}
+  
+.course-features li { 
+  padding: 1rem 0; 
+  font-size: 1.4rem; 
+  display: flex; 
+  align-items: center; 
+  gap: 1rem; 
+  transition: all 0.3s ease; 
+}
+  
+.course-features li:hover { 
+  color: var(--secondary); 
+  transform: translateX(5px); 
+}
+  
+.btn-enroll {
+  background: linear-gradient(135deg, var(--secondary), #00c9a7); 
+  border: none; 
+  border-radius: 8px;
+  padding: 1.2rem 2rem; 
+  font-weight: 700; 
+  letter-spacing: 0.5px; 
+  cursor: pointer; 
+  overflow: hidden;
+  position: relative; 
+  transition: transform 0.3s ease; 
+  animation: bounce 3s infinite 1s;
+  color: var(--primary);
+  font-size: 1.6rem;
+  width: 100%;
+}
+  
+.btn-enroll:hover { 
+  animation: pulse 1s ease-in-out forwards; 
+}
+
+/* === TEACHERS === */
+.teachers-section {
+  padding: 10rem 5%;
+  background: linear-gradient(to top, var(--dark) 20%, var(--primary) 100%);
+}
+  
+.teachers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 4rem;
+  max-width: 1400px;
+  margin: 4rem auto 0;
+}
+  
+.teacher-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(var(--secondary), 0.15);
+  border-radius: 16px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+  
+.teacher-card:hover {
+  transform: translateY(-10px);
+}
+
+.teacher-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto 2rem;
+  border: 3px solid var(--secondary);
+  object-fit: cover;
+}
+  
+.teacher-name {
+  font-size: 2rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.teacher-qualifications {
+  font-size: 1.4rem;
+  color: var(--accent);
+  line-height: 1.6;
+}
+
+/* === GALLERY === */
+.gallery-section {
+  padding: 10rem 5%;
+  background: linear-gradient(to bottom, var(--primary) 20%, var(--dark) 100%);
+}
+  
+.gallery-title {
+  text-align: center;
+  font-size: 3.6rem;
+  color: var(--secondary);
+  margin-bottom: 4rem;
+  animation: fadeIn 1s ease forwards;
+  background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 15s infinite linear;
+}
+  
+.gallery-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+  
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+  
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+  
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+  
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(var(--secondary), 0.1);
+}
+  
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+  
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(var(--dark), 0.8);
+  color: var(--light);
+  padding: 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+  
+.gallery-item:hover .gallery-caption {
+  transform: translateY(0);
+}
+  
+.gallery-caption h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--light);
+}
+  
+.gallery-caption p {
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+/* === CONTACT === */
+.contact-section { 
+  background: var(--dark); 
+  padding: 10rem 5%;
+}
+  
+.contact-container {
+  max-width: 1200px; 
+  margin: 0 auto; 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 8rem; 
+  align-items: center;
+}
+  
+.contact-info h2 { 
+  font-size: 2.8rem; 
+  margin: 1.5rem 0; 
+}
+  
+.contact-info p { 
+  font-size: 1.6rem; 
+  margin-bottom: 1rem; 
+  color: var(--accent);
+}
+  
+.contact-form {
+  background: rgba(255,255,255,0.02); 
+  padding: 4rem; 
+  border-radius: 8px; 
+  border: 1px solid rgba(var(--secondary), 0.1);
+}
+  
+.form-group { 
+  margin-bottom: 2.4rem; 
+}
+  
+input, textarea {
+  width: 100%; 
+  padding: 1.6rem; 
+  background: rgba(255,255,255,0.03); 
+  border: 1px solid rgba(var(--secondary), 0.1);
+  border-radius: 4px; 
+  color: var(--light); 
+  font-size: 1.6rem; 
+  transition: all 0.3s ease;
+}
+  
+input:focus, textarea:focus {
+  border-color: var(--secondary); 
+  outline: none; 
+  box-shadow: 0 0 0 3px rgba(var(--secondary), 0.2);
+  animation: pulse 0.8s ease-in-out;
+}
+  
+.btn {
+  display: inline-flex; 
+  align-items: center; 
+  padding: 1.6rem 3.2rem; 
+  background: var(--secondary);
+  color: var(--primary); 
+  border: none; 
+  border-radius: 4px; 
+  font-size: 1.6rem; 
+  font-weight: 600; 
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+  
+.btn:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 5px 15px rgba(var(--secondary), 0.2); 
+}
+
+/* === FOOTER === */
+footer {
+  background: var(--dark);
+  text-align: center;
+  padding: 5rem 5%;
+  font-size: 1.6rem;
+  color: var(--accent);
+  border-top: 1px solid rgba(var(--secondary), 0.1);
+}
+  
+footer a { 
+  background-image: -webkit-linear-gradient(125deg, #f2291b, #f7db25, #84f527);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 15s infinite linear;
+  margin: 0 auto;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 992px) {
+  .nav-menu {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .about-content {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .hero-text h1 {
+    font-size: 3.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 55%;
+  }
+
+  .hero-text h1 {
+    font-size: 3.2rem;
+  }
+
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .teachers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .logo {
+    font-size: 1.8rem;
+  }
+
+  .logos {
+    height: 40px;
+    width: 40px;
+  }
+
+  .hero-text h1 {
+    font-size: 2.8rem;
+  }
+
+  .contact-form {
+    padding: 2rem;
+  }
+}
+
+/* Hide desktop mode menu item */
+.theme-toggle {
+  display: none !important;
+}</style>
 </head>
 <body>
   <nav class="nav-container">
@@ -1055,7 +2506,10 @@
     <div class="nav-menu" id="navMenu">
       <div class="ai-search-trigger" id="aiSearchTrigger">
   <i class='bx bx-search-alt'></i>
-</div><button class="theme-toggle" id="themeToggle">Light Theme</button>
+</div>      <button class="theme-toggle" id="themeToggle">
+        <i class='bx bx-sun'></i>
+        <span>Light</span>
+      </button>
       <div class="nav-item"><a href="#home">Home</a></div>
       <div class="nav-item"><a href="#about">About</a></div>
       <div class="nav-item"><a href="#courses">Courses</a></div>
@@ -1483,74 +2937,337 @@
     document.querySelectorAll('.animate').forEach(el => observer.observe(el));
   </script>
   <script>
-// AI Search System
+    
+// Enhanced AI Search System
 const aiSearchTrigger = document.getElementById('aiSearchTrigger');
 const aiSearchContainer = document.getElementById('aiSearchContainer');
 const aiSearchClose = document.getElementById('aiSearchClose');
 const aiSearchInput = document.getElementById('aiSearchInput');
 const aiSuggestions = document.getElementById('aiSuggestions');
 const aiResultsContainer = document.getElementById('aiResultsContainer');
+const aiSearchLoader = document.createElement('div');
+aiSearchLoader.className = 'ai-search-loader';
+aiSearchLoader.innerHTML = `
+  <div class="ai-typing">
+    <span>Searching</span>
+    <div class="ai-typing-dots">
+      <div class="ai-typing-dot"></div>
+      <div class="ai-typing-dot"></div>
+      <div class="ai-typing-dot"></div>
+    </div>
+  </div>
+`;
+aiSearchContainer.appendChild(aiSearchLoader);
 
-// Content Index
+// Enhanced Content Index with more metadata
 const contentIndex = [
   {
     id: 'web-dev',
-    type: 'Course',
-    title: 'Web Development Course',
-    content: 'Comprehensive web development course covering JavaScript, React, Node.js, MongoDB, and more.',
-    keywords: ['web', 'development', 'javascript', 'react'],
-    link: '#courses'
+    type: 'Premium Course',
+    title: 'Web Development Masterclass',
+    content: 'Comprehensive web development course covering modern JavaScript, React, Node.js, MongoDB, and deployment strategies. Learn to build full-stack applications from scratch.',
+    keywords: ['web', 'development', 'javascript', 'react', 'node', 'mongodb', 'frontend', 'backend', 'fullstack'],
+    tags: ['programming', 'beginner-friendly', 'certified'],
+    difficulty: 'Intermediate',
+    duration: '6 months',
+    price: '8,500৳',
+    originalPrice: '10,500৳',
+    rating: 4.8,
+    link: '#courses',
+    lastUpdated: '2023-10-15',
+    teacher: 'MD. Samsuzzman Rubel'
   },
   {
     id: 'cpa-marketing',
-    type: 'Course',
-    title: 'CPA Marketing',
-    content: 'Learn affiliate marketing strategies with our CPA Marketing course.',
-    keywords: ['cpa', 'marketing', 'affiliate'],
-    link: '#courses'
+    type: 'Popular Course',
+    title: 'CPA Marketing Pro',
+    content: 'Advanced affiliate marketing strategies with our CPA Marketing course. Learn traffic generation, conversion optimization, and scaling techniques to earn money online.',
+    keywords: ['cpa', 'marketing', 'affiliate', 'traffic', 'conversion', 'ads', 'earn money'],
+    tags: ['marketing', 'advanced', 'business'],
+    difficulty: 'Beginner',
+    duration: '2 months',
+    price: '5,500৳',
+    originalPrice: '7,500৳',
+    rating: 4.6,
+    link: '#courses',
+    lastUpdated: '2023-09-20',
+    teacher: 'Nahid Sultan'
   },
-  // Add more content items as needed
+  {
+    id: 'graphics-design',
+    type: 'Course',
+    title: 'Graphics Design',
+    content: 'Master Adobe Photoshop, Illustrator and design principles to create stunning visuals for web and print media.',
+    keywords: ['graphics', 'design', 'photoshop', 'illustrator'],
+    tags: ['design', 'creative'],
+    difficulty: 'Beginner',
+    duration: '4 months',
+    price: '4,500৳',
+    originalPrice: '6,000৳',
+    rating: 4.7,
+    link: '#courses',
+    lastUpdated: '2023-11-05',
+    teacher: 'MD. Afjal Husain'
+  },
+  {
+    id: 'spoken-english',
+    type: 'Language Course',
+    title: 'Spoken English',
+    content: 'Improve your English communication skills with our certified British teacher. Focus on pronunciation, fluency and real-world conversation.',
+    keywords: ['english', 'language', 'speaking', 'communication'],
+    tags: ['language', 'beginner-friendly'],
+    difficulty: 'All Levels',
+    duration: '3 months',
+    price: '3,000৳',
+    originalPrice: '4,500৳',
+    rating: 4.9,
+    link: '#courses',
+    lastUpdated: '2023-12-10',
+    teacher: 'Muhammad Masuk Mia'
+  },
+  {
+    id: 'basic-computer',
+    type: 'Basic Course',
+    title: 'Basic Computer Skills',
+    content: 'Essential computer skills including Microsoft Office, internet usage, email and basic troubleshooting.',
+    keywords: ['computer', 'basic', 'microsoft office', 'beginner'],
+    tags: ['beginner-friendly', 'essential'],
+    difficulty: 'Beginner',
+    duration: '3 months',
+    price: '3,500৳',
+    originalPrice: '5,500৳',
+    rating: 4.5,
+    link: '#courses',
+    lastUpdated: '2023-08-15',
+    teacher: 'MD. Samsuzzman Rubel'
+  },
+  {
+    id: 'data-entry',
+    type: 'Skill Course',
+    title: 'Data Entry',
+    content: 'Learn professional data entry techniques, Excel formulas, and tools to work efficiently as a data entry specialist.',
+    keywords: ['data', 'entry', 'excel', 'typing'],
+    tags: ['skill', 'freelancing'],
+    difficulty: 'Beginner',
+    duration: '3 months',
+    price: 'Contact for price',
+    rating: 4.3,
+    link: '#contact',
+    lastUpdated: '2023-07-20',
+    teacher: 'Iqbal Mahfuj'
+  },
+  {
+    id: 'teacher-rubel',
+    type: 'Teacher',
+    title: 'MD. Samsuzzman Rubel',
+    content: 'Computer Hardware & Software Engineer, Graphic Designer, Web/App Designer, 2D Animation Maker, Digital Marketer, Affiliate & CPA Marketer',
+    keywords: ['teacher', 'instructor', 'web development', 'graphic design'],
+    tags: ['expert', 'multiskilled'],
+    link: '#teachers'
+  },
+  {
+    id: 'teacher-masuk',
+    type: 'Teacher',
+    title: 'Muhammad Masuk Mia',
+    content: 'Assistant Professor at AL-Emad Degree college chandarpur, Gopalgonj. British teacher certified English Language teacher.',
+    keywords: ['teacher', 'professor', 'english', 'language'],
+    tags: ['certified'],
+    link: '#teachers'
+  },
+  {
+    id: 'teacher-iqbal',
+    type: 'Teacher',
+    title: 'Iqbal Mahfuj',
+    content: 'HONOURS 1st year Political Science Student. Science teacher with expertise in data entry and office applications.',
+    keywords: ['teacher', 'science', 'data entry'],
+    tags: ['student', 'teacher'],
+    link: '#teachers'
+  },
+  {
+    id: 'teacher-nahid',
+    type: 'Teacher',
+    title: 'Nahid Sultan',
+    content: 'Freelancer and Digital Marketer specializing in CPA marketing strategies and online business development.',
+    keywords: ['teacher', 'freelancer', 'marketing', 'cpa'],
+    tags: ['digital marketer'],
+    link: '#teachers'
+  },
+  {
+    id: 'teacher-afjal',
+    type: 'Teacher',
+    title: 'MD. Afjal Husain',
+    content: 'Diploma in Computer, Graphic Designer & Digital Marketer with experience in creating visual content for businesses.',
+    keywords: ['teacher', 'graphic design', 'digital marketing'],
+    tags: ['designer'],
+    link: '#teachers'
+  },
+  {
+    id: 'contact-info',
+    type: 'Information',
+    title: 'Contact Information',
+    content: 'Email: advanceitds@gmail.com | Phone: +8801744525287, +8801766417142 | Location: Sylhet, Bangladesh',
+    keywords: ['contact', 'email', 'phone', 'location'],
+    tags: ['support'],
+    link: '#contact'
+  },
+  {
+    id: 'about-academy',
+    type: 'Information',
+    title: 'About Advance IT',
+    content: 'We provide industry-leading technical education with practical learning approaches. Features include expert-led instruction, project-based learning, career support and flexible scheduling.',
+    keywords: ['about', 'academy', 'education', 'learning'],
+    tags: ['information'],
+    link: '#about'
+  }
 ];
 
-// Search Triggers
+// Search State Management
+let searchState = {
+  query: '',
+  activeFilters: {
+    type: [],
+    difficulty: [],
+    tags: []
+  },
+  sortBy: 'relevance'
+};
+
+// Search Triggers with animation
 aiSearchTrigger.addEventListener('click', () => {
   aiSearchContainer.classList.add('active');
-  aiSearchInput.focus();
+  setTimeout(() => {
+    aiSearchInput.focus();
+    showDefaultResults();
+  }, 100);
 });
 
 aiSearchClose.addEventListener('click', () => {
   aiSearchContainer.classList.remove('active');
   aiSearchInput.value = '';
+  searchState.query = '';
+  resetFilters();
   showDefaultResults();
 });
 
-// Search Input Handling
+// Enhanced Search Input Handling with debounce and loading state
 let searchDebounce;
 aiSearchInput.addEventListener('input', (e) => {
   clearTimeout(searchDebounce);
   const query = e.target.value.trim();
+  searchState.query = query;
   
   if (!query) {
     showDefaultResults();
+    aiSearchLoader.style.display = 'none';
     return;
   }
   
+  // Show loading indicator
+  aiSearchLoader.style.display = 'block';
+  aiResultsContainer.innerHTML = '';
+  
   searchDebounce = setTimeout(() => {
     performSearch(query);
-  }, 300);
+    aiSearchLoader.style.display = 'none';
+  }, 250);
 });
 
-// Search Functionality
+// Advanced Search Functionality with fuzzy matching and weighting
 function performSearch(query) {
-  const results = contentIndex.filter(item => {
-    const searchString = `${item.title} ${item.content} ${item.keywords.join(' ')}`.toLowerCase();
-    return searchString.includes(query.toLowerCase());
+  // Normalize query
+  const normalizedQuery = query.toLowerCase().trim();
+  
+  // Score and rank results
+  const scoredResults = contentIndex.map(item => {
+    let score = 0;
+    
+    // Exact matches score highest
+    if (item.title.toLowerCase() === normalizedQuery) score += 100;
+    if (item.content.toLowerCase().includes(normalizedQuery)) score += 30;
+    
+    // Title matches score high
+    if (item.title.toLowerCase().includes(normalizedQuery)) score += 50;
+    
+    // Keyword matches
+    const keywordMatch = item.keywords.some(kw => kw.toLowerCase() === normalizedQuery);
+    if (keywordMatch) score += 40;
+    
+    // Partial keyword matches
+    const partialKeywordMatch = item.keywords.some(kw => kw.toLowerCase().includes(normalizedQuery));
+    if (partialKeywordMatch) score += 20;
+    
+    // Partial matches (fuzzy search)
+    const partialTitleMatch = normalizedQuery.split(' ').some(term => 
+      item.title.toLowerCase().includes(term)
+    );
+    if (partialTitleMatch) score += 15;
+    
+    // Tag matches
+    const tagMatch = item.tags.some(tag => tag.toLowerCase().includes(normalizedQuery));
+    if (tagMatch) score += 10;
+    
+    // Teacher matches
+    if (item.teacher && item.teacher.toLowerCase().includes(normalizedQuery)) score += 30;
+    
+    // Apply filters
+    const passesFilters = applyFilters(item);
+    
+    return {
+      ...item,
+      score,
+      passesFilters
+    };
   });
   
-  displayResults(results, query);
+  // Filter and sort results
+  const filteredResults = scoredResults
+    .filter(item => item.score > 0 && item.passesFilters)
+    .sort((a, b) => {
+      if (searchState.sortBy === 'relevance') {
+        return b.score - a.score;
+      } else if (searchState.sortBy === 'rating') {
+        return b.rating - a.rating;
+      } else if (searchState.sortBy === 'recent') {
+        return new Date(b.lastUpdated) - new Date(a.lastUpdated);
+      } else if (searchState.sortBy === 'price-low') {
+        return parsePrice(a.price) - parsePrice(b.price);
+      } else if (searchState.sortBy === 'price-high') {
+        return parsePrice(b.price) - parsePrice(a.price);
+      }
+      return b.score - a.score;
+    });
+  
+  displayResults(filteredResults, query);
+  updateSuggestions(query);
 }
 
-// Display Results
+function parsePrice(priceStr) {
+  if (!priceStr || priceStr.toLowerCase().includes('contact')) return Infinity;
+  return parseFloat(priceStr.replace(/[^\d]/g, ''));
+}
+
+// Apply active filters to items
+function applyFilters(item) {
+  const { type, difficulty, tags } = searchState.activeFilters;
+  
+  let passes = true;
+  
+  if (type.length > 0 && !type.includes(item.type)) {
+    passes = false;
+  }
+  
+  if (difficulty.length > 0 && !difficulty.includes(item.difficulty)) {
+    passes = false;
+  }
+  
+  if (tags.length > 0 && !tags.some(tag => item.tags && item.tags.includes(tag))) {
+    passes = false;
+  }
+  
+  return passes;
+}
+
+// Enhanced Display Results with more information
 function displayResults(results, query) {
   aiResultsContainer.innerHTML = '';
   
@@ -1558,57 +3275,271 @@ function displayResults(results, query) {
     aiResultsContainer.innerHTML = `
       <div class="ai-no-results">
         <p>No results found for "${query}"</p>
+        <p class="ai-suggestion">Try different keywords or adjust your filters</p>
       </div>
     `;
     return;
   }
   
-  results.forEach(result => {
-    const resultElement = document.createElement('div');
-    resultElement.className = 'ai-result-card';
-    resultElement.innerHTML = `
-      <div class="ai-result-title">
-        ${result.title}
-        <span class="ai-result-type">${result.type}</span>
-      </div>
-      <div class="ai-result-content">
-        ${highlightMatches(result.content, query)}
-      </div>
-    `;
+  // Group results by type
+  const groupedResults = results.reduce((groups, item) => {
+    const group = groups[item.type] || [];
+    group.push(item);
+    groups[item.type] = group;
+    return groups;
+  }, {});
+  
+  // Display grouped results
+  for (const [type, items] of Object.entries(groupedResults)) {
+    const groupHeader = document.createElement('h3');
+    groupHeader.className = 'ai-results-group-header';
+    groupHeader.textContent = type;
+    aiResultsContainer.appendChild(groupHeader);
     
-    resultElement.addEventListener('click', () => {
-      window.location.href = result.link;
-      aiSearchContainer.classList.remove('active');
+    items.forEach(result => {
+      const resultElement = document.createElement('div');
+      resultElement.className = 'ai-result-card';
+      
+      // Generate rating stars if available
+      let ratingStars = '';
+      if (result.rating) {
+        ratingStars = `
+          <div class="ai-rating">
+            ${'★'.repeat(Math.floor(result.rating))}${result.rating % 1 >= 0.5 ? '½' : ''}${'☆'.repeat(5 - Math.ceil(result.rating))}
+            <span>${result.rating}</span>
+          </div>
+        `;
+      }
+      
+      // Generate price display if available
+      let priceDisplay = '';
+      if (result.price) {
+        priceDisplay = `
+          <div class="ai-price">
+            ${result.originalPrice ? `<span class="ai-original-price">${result.originalPrice}</span>` : ''}
+            <span class="ai-current-price">${result.price}</span>
+          </div>
+        `;
+      }
+      
+      // Generate teacher info if available
+      let teacherInfo = '';
+      if (result.teacher) {
+        teacherInfo = `
+          <div class="ai-teacher">
+            <i class='bx bx-user'></i>
+            <span>${result.teacher}</span>
+          </div>
+        `;
+      }
+      
+      // Generate duration if available
+      let durationInfo = '';
+      if (result.duration) {
+        durationInfo = `
+          <div class="ai-duration">
+            <i class='bx bx-time'></i>
+            <span>${result.duration}</span>
+          </div>
+        `;
+      }
+      
+      resultElement.innerHTML = `
+        <div class="ai-result-header">
+          <div class="ai-result-title">
+            ${highlightMatches(result.title, query)}
+          </div>
+          ${ratingStars}
+        </div>
+        <div class="ai-result-content">
+          ${highlightMatches(result.content, query)}
+        </div>
+        <div class="ai-result-footer">
+          ${teacherInfo}
+          ${durationInfo}
+          ${priceDisplay}
+          <div class="ai-tags">
+            ${result.tags ? result.tags.map(tag => `<span class="ai-tag">${tag}</span>`).join('') : ''}
+          </div>
+        </div>
+      `;
+      
+      resultElement.addEventListener('click', () => {
+        window.location.href = result.link;
+        aiSearchContainer.classList.remove('active');
+      });
+      
+      aiResultsContainer.appendChild(resultElement);
+    });
+  }
+}
+
+// Smart Suggestions with query prediction
+function updateSuggestions(query) {
+  if (!query || query.length < 2) {
+    aiSuggestions.innerHTML = '';
+    return;
+  }
+  
+  // Find similar terms from content index
+  const suggestions = new Set();
+  const normalizedQuery = query.toLowerCase();
+  
+  contentIndex.forEach(item => {
+    // Check title words
+    item.title.split(' ').forEach(word => {
+      if (word.toLowerCase().startsWith(normalizedQuery)) {
+        suggestions.add(word);
+      }
     });
     
-    aiResultsContainer.appendChild(resultElement);
+    // Check keywords
+    item.keywords.forEach(keyword => {
+      if (keyword.toLowerCase().includes(normalizedQuery)) {
+        suggestions.add(keyword);
+      }
+    });
+    
+    // Check tags
+    if (item.tags) {
+      item.tags.forEach(tag => {
+        if (tag.toLowerCase().includes(normalizedQuery)) {
+          suggestions.add(tag);
+        }
+      });
+    }
+    
+    // Check teacher names
+    if (item.teacher && item.teacher.toLowerCase().includes(normalizedQuery)) {
+      suggestions.add(item.teacher);
+    }
   });
+  
+  // Add common queries
+  const commonQueries = [
+    'web development course',
+    'cpa marketing',
+    'graphic design',
+    'english course',
+    'computer basics',
+    'data entry',
+    'teachers',
+    'contact',
+    'pricing',
+    'duration'
+  ];
+  
+  commonQueries.forEach(phrase => {
+    if (phrase.includes(normalizedQuery)) {
+      suggestions.add(phrase);
+    }
+  });
+  
+  if (suggestions.size > 0) {
+    aiSuggestions.innerHTML = Array.from(suggestions)
+      .slice(0, 6)
+      .map(suggestion => `
+        <div class="ai-suggestion-chip" data-suggestion="${suggestion}">
+          ${highlightMatches(suggestion, query)}
+        </div>
+      `).join('');
+    
+    // Add click handlers to suggestions
+    document.querySelectorAll('.ai-suggestion-chip').forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        const suggestion = e.currentTarget.dataset.suggestion;
+        aiSearchInput.value = suggestion;
+        searchState.query = suggestion;
+        performSearch(suggestion);
+      });
+    });
+  } else {
+    aiSuggestions.innerHTML = '';
+  }
 }
 
 // Helper Functions
 function highlightMatches(text, term) {
-  if (!term) return text;
-  const regex = new RegExp(`(${term})`, 'gi');
-  return text.replace(regex, '<span class="highlight">$1</span>');
+  if (!term || !text) return text;
+  
+  // Split into words for partial matching
+  const terms = term.split(' ').filter(t => t.length > 0);
+  let highlighted = text;
+  
+  terms.forEach(t => {
+    const regex = new RegExp(`(${escapeRegExp(t)})`, 'gi');
+    highlighted = highlighted.replace(regex, '<span class="highlight">$1</span>');
+  });
+  
+  return highlighted;
+}
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function formatDate(dateString) {
+  if (!dateString) return '';
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
 function showDefaultResults() {
+  // Show popular courses and common searches
+  const popularCourses = contentIndex.filter(item => item.type.includes('Course')).slice(0, 3);
+  const commonSearches = ['Web Development', 'CPA Marketing', 'Graphic Design', 'Teachers', 'Contact Info'];
+  
   aiResultsContainer.innerHTML = `
-    <div class="ai-no-results">
-      <p>Type to search courses, teachers, or information</p>
+    <div class="ai-default-results">
+      <h4>Popular Courses</h4>
+      <div class="ai-popular-items">
+        ${popularCourses.map(course => `
+          <div class="ai-popular-card" data-id="${course.id}">
+            <div class="ai-popular-title">${course.title}</div>
+            <div class="ai-popular-meta">
+              ${course.rating ? `<span class="ai-rating">★ ${course.rating}</span>` : ''}
+              <span class="ai-difficulty ${course.difficulty ? course.difficulty.toLowerCase() : ''}">${course.difficulty || ''}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="ai-search-tips">
+        <h4>Search Tips</h4>
+        <ul>
+          <li>Try searching by course name, teacher, or topic</li>
+          <li>Popular searches: 
+            ${commonSearches.map(term => `<span class="ai-tip" data-term="${term}">${term}</span>`).join(', ')}
+          </li>
+          <li>Use specific terms like "web development price" or "english course duration"</li>
+        </ul>
+      </div>
     </div>
   `;
+  
+  // Add click handlers to popular items
+  document.querySelectorAll('.ai-popular-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const itemId = card.dataset.id;
+      const item = contentIndex.find(i => i.id === itemId);
+      if (item) {
+        window.location.href = item.link;
+        aiSearchContainer.classList.remove('active');
+      }
+    });
+  });
+  
+  // Add click handlers to search tips
+  document.querySelectorAll('.ai-tip').forEach(tip => {
+    tip.addEventListener('click', () => {
+      const term = tip.dataset.term;
+      aiSearchInput.value = term;
+      searchState.query = term;
+      performSearch(term);
+    });
+  });
 }
 
-// Suggestions
-document.querySelectorAll('.ai-suggestion-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    aiSearchInput.value = chip.textContent;
-    performSearch(chip.textContent);
-  });
-});
-
-// Keyboard Shortcuts
+// Keyboard Shortcuts with more options
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
     e.preventDefault();
@@ -1619,6 +3550,49 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     aiSearchContainer.classList.remove('active');
   }
+  
+  // Navigate suggestions with arrow keys
+  if (aiSearchContainer.classList.contains('active') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+    const suggestions = document.querySelectorAll('.ai-suggestion-chip');
+    if (suggestions.length > 0) {
+      e.preventDefault();
+      const currentActive = document.querySelector('.ai-suggestion-chip.active');
+      let index = currentActive ? Array.from(suggestions).indexOf(currentActive) : -1;
+      
+      if (e.key === 'ArrowDown') {
+        index = (index + 1) % suggestions.length;
+      } else if (e.key === 'ArrowUp') {
+        index = (index - 1 + suggestions.length) % suggestions.length;
+      }
+      
+      suggestions.forEach((s, i) => {
+        if (i === index) {
+          s.classList.add('active');
+          aiSearchInput.value = s.dataset.suggestion;
+        } else {
+          s.classList.remove('active');
+        }
+      });
+    }
+  }
+  
+  // Select suggestion with Enter
+  if (e.key === 'Enter' && aiSearchContainer.classList.contains('active')) {
+    const activeSuggestion = document.querySelector('.ai-suggestion-chip.active');
+    if (activeSuggestion) {
+      e.preventDefault();
+      const suggestion = activeSuggestion.dataset.suggestion;
+      aiSearchInput.value = suggestion;
+      searchState.query = suggestion;
+      performSearch(suggestion);
+    }
+  }
 });
-</script>
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+  showDefaultResults();
+});
+
+  </script>
 </body>
