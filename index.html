@@ -41,7 +41,8 @@
       --danger: #dc3545;
       --info: #17a2b8;
     }
-    
+
+}
     /* Light theme overrides */
     [data-theme="light"] {
       --primary: #f0f0f5;
@@ -2394,37 +2395,393 @@
       </div>
       
       <form class="contact-form" id="contactForm">
-        <div class="form-group">
-          <input type="text" id="name" placeholder=" " required />
-          <label for="name" class="form-label">Your Name</label>
-        </div>
-        <div class="form-group">
-          <input type="email" id="email" placeholder=" " required />
-          <label for="email" class="form-label">Your Email</label>
-        </div>
-        <div class="form-group">
-          <input type="tel" id="phone" placeholder=" " />
-          <label for="phone" class="form-label">Phone Number</label>
-        </div>
-        <div class="form-group">
-          <select id="course" class="form-control">
-            <option value="">Select a course (optional)</option>
-            <option value="web-development">Web Development</option>
-            <option value="cpa-marketing">CPA Marketing</option>
-            <option value="graphic-design">Graphic Design</option>
-            <option value="spoken-english">Spoken English</option>
-            <option value="basic-computer">Basic Computer</option>
-            <option value="academic-program">Academic Program</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <textarea id="message" rows="5" placeholder=" " required></textarea>
-          <label for="message" class="form-label">Your Message</label>
-        </div>
-        <button type="submit" class="btn">
-          Send Message <i class='bx bx-send'></i>
-        </button>
-      </form>
+  <div class="form-group">
+    <input type="text" id="name" name="name" placeholder=" " required />
+    <label for="name" class="form-label">Your Name</label>
+  </div>
+  <div class="form-group">
+    <input type="email" id="email" name="email" placeholder=" " required />
+    <label for="email" class="form-label">Your Email</label>
+  </div>
+  <div class="form-group">
+    <input type="tel" id="phone" name="phone" placeholder=" " />
+    <label for="phone" class="form-label">Phone Number</label>
+  </div>
+<div class="form-group-animated">
+  <div class="select-wrapper">
+    <select id="course" name="course" class="animated-select">
+      <option value="">Select a course (optional)</option>
+      <option value="web-development">Web Development</option>
+      <option value="cpa-marketing">CPA Marketing</option>
+      <option value="graphic-design">Graphic Design</option>
+      <option value="spoken-english">Spoken English</option>
+      <option value="basic-computer">Basic Computer</option>
+      <option value="academic-program">Academic Program</option>
+    </select>
+    <div class="select-arrow"></div>
+    <div class="particles"></div>
+    <div class="focus-border"></div>
+  </div>
+</div>
+
+<style>
+/* === BASE STYLES === */
+.form-group-animated {
+  position: relative;
+  margin: 3rem 0;
+  width: 100%;
+  perspective: 1000px;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+/* === ANIMATED SELECT ELEMENT === */
+.animated-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  padding: 1.5rem 2rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  background-color: rgba(10, 25, 47, 0.8);
+  border: none;
+  border-radius: 12px;
+  color: #ccd6f6;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(100, 255, 218, 0.3);
+  position: relative;
+  z-index: 2;
+  transform-origin: center center;
+  animation: selectEntrance 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px) rotateX(15deg);
+}
+
+@keyframes selectEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+/* === CUSTOM DROPDOWN ARROW === */
+.select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid #64ffda;
+  border-bottom: 2px solid #64ffda;
+  transform: translateY(-50%) rotate(45deg);
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* === FOCUS/HOVER STATES === */
+.animated-select:focus {
+  outline: none;
+  background-color: rgba(10, 25, 47, 0.9);
+  box-shadow: 
+    0 8px 30px rgba(100, 255, 218, 0.3),
+    inset 0 0 0 1px rgba(100, 255, 218, 0.5);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.animated-select:hover {
+  box-shadow: 
+    0 6px 25px rgba(100, 255, 218, 0.2),
+    inset 0 0 0 1px rgba(100, 255, 218, 0.4);
+}
+
+.animated-select:focus ~ .select-arrow {
+  transform: translateY(-50%) rotate(225deg);
+  right: 18px;
+}
+
+.animated-select:focus ~ .focus-border {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* === FOCUS BORDER ANIMATION === */
+.focus-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #64ffda, #6a87ff, #64ffda);
+  background-size: 200% 100%;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+  z-index: 4;
+  animation: borderGradient 3s linear infinite;
+}
+
+@keyframes borderGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* === PARTICLE EFFECTS === */
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particles::before,
+.particles::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100, 255, 218, 0.8), transparent 70%);
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+.particles::before {
+  width: 150px;
+  height: 150px;
+  top: -50px;
+  left: -50px;
+}
+
+.particles::after {
+  width: 200px;
+  height: 200px;
+  bottom: -80px;
+  right: -80px;
+}
+
+.animated-select:focus ~ .particles::before,
+.animated-select:focus ~ .particles::after {
+  opacity: 0.3;
+}
+
+/* === DYNAMIC PARTICLE GENERATION === */
+.animated-select:focus ~ .particles {
+  animation: particlePulse 1.5s ease-out;
+}
+
+@keyframes particlePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* === OPTION STYLING === */
+.animated-select option {
+  background-color: #0a192f;
+  color: #ccd6f6;
+  padding: 15px;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+}
+
+.animated-select option:hover {
+  background-color: rgba(100, 255, 218, 0.2) !important;
+  color: #64ffda !important;
+}
+
+.animated-select option:checked {
+  background-color: rgba(100, 255, 218, 0.3);
+  color: #64ffda;
+  font-weight: 600;
+}
+
+/* === DROPDOWN ANIMATION === */
+.animated-select:focus {
+  animation: dropdownOpen 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes dropdownOpen {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+/* === LABEL ANIMATION (if you add a label) === */
+.form-group-animated label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #64ffda;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: labelEntrance 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
+}
+
+@keyframes labelEntrance {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* === LIGHT THEME VARIATION === */
+@media (prefers-color-scheme: light) {
+  .animated-select {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #0a192f;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.1),
+      inset 0 0 0 1px rgba(0, 74, 173, 0.3);
+  }
+  
+  .animated-select:focus {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 
+      0 8px 30px rgba(0, 74, 173, 0.2),
+      inset 0 0 0 1px rgba(0, 74, 173, 0.5);
+  }
+  
+  .select-arrow {
+    border-color: #004aad;
+  }
+  
+  .focus-border {
+    background: linear-gradient(90deg, #004aad, #6a87ff, #004aad);
+  }
+  
+  .animated-select option {
+    background-color: #fff;
+    color: #0a192f;
+  }
+  
+  .form-group-animated label {
+    color: #004aad;
+  }
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 768px) {
+  .animated-select {
+    padding: 1.2rem 1.8rem;
+    font-size: 1.4rem;
+  }
+  
+  .select-arrow {
+    right: 15px;
+    width: 10px;
+    height: 10px;
+  }
+}
+</style>
+
+<script>
+// Additional particle animation on focus
+document.querySelector('.animated-select').addEventListener('focus', function() {
+  const particles = this.parentNode.querySelector('.particles');
+  
+  // Create 10 floating particles
+  for (let i = 0; i < 10; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'floating-particle';
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.width = `${Math.random() * 6 + 2}px`;
+    particle.style.height = particle.style.width;
+    particle.style.background = `hsl(${200 + Math.random() * 40}, 80%, 60%)`;
+    particle.style.animationDelay = `${Math.random() * 0.5}s`;
+    
+    particles.appendChild(particle);
+    
+    // Remove particle after animation
+    setTimeout(() => {
+      particle.remove();
+    }, 1000);
+  }
+});
+
+// Add floating particle animation to CSS
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes floatParticle {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(
+        ${Math.random() * 60 - 30}px,
+        ${Math.random() * 60 - 30}px
+      ) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  .floating-particle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(1px);
+    animation: floatParticle 1s ease-out forwards;
+    z-index: 1;
+  }
+`;
+document.head.appendChild(style);
+</script>
+  <div class="form-group">
+    <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
+    <label for="message" class="form-label">Your Message</label>
+  </div>
+  <button type="submit" class="btn">
+    Send Message <i class='bx bx-send'></i>
+  </button>
+</form>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Collect form data
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const course = document.getElementById('course').value;
+    const message = document.getElementById('message').value;
+    
+    // Your email address where you want to receive messages
+    const yourEmail = 'advanceit1bd@gmail.com'; // Replace with your email
+    
+    // Subject line
+    const subject = `New Contact Form Submission from ${name}`;
+    
+    // Compose email body
+    let body = `Name: ${name}\n`;
+    body += `Email: ${email}\n`;
+    body += `Phone: ${phone}\n`;
+    body += `Course: ${course}\n\n`;
+    body += `Message:\n${message}`;
+    
+    // Encode URI components
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    
+    // Open user's default email client
+    window.location.href = `mailto:${yourEmail}?subject=${encodedSubject}&body=${encodedBody}`;
+  });
+</script>
     </div>
   </section>
   
